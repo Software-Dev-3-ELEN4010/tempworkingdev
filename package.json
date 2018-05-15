@@ -1,0 +1,55 @@
+{
+  "name": "Dont-Forget-The-Oreos",
+  "version": "0.0.0",
+  "description": "A simple shopping list application",
+  "main": "server.js",
+  "author": "Christopher Maree, Kavilan Nair, Daniel Edwards, Iordan Tchaaparov",
+  "scripts": {
+    "build": "webpack",
+    "prepublish": "npm run build",
+    "test": "standard && mocha --timeout 10000 --exit",
+    "start": "node server"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "axios": "^0.16.2",
+    "body-parser": "^1.5.2",
+    "bootstrap": "4.1.1",
+    "express": "~4.7.2",
+    "method-override": "~2.1.2",
+    "mongoose": "~4.7.6",
+    "morgan": "*",
+    "sinon": "^4.5.0",
+    "sinon-mongoose": "^2.1.1",
+    "vue": "^2.5.11",
+    "vue-axios": "^2.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "chai": "^4.1.2",
+    "chai-http": "^2.0.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "mocha": "^5.1.1",
+    "mocha-jshint": "^2.3.1",
+    "prettier": "^1.9.2",
+    "run-when-changed": "^2.1.0",
+    "standard": "^11.0.1",
+    "supertest": "^3.0.0",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "standard": {
+    "ignore": [
+      "*.bundle.js",
+      "/test/shoppingList.js",
+      "/public/src/font-awesome/"
+    ]
+  }
+}
