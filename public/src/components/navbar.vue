@@ -6,9 +6,9 @@
                     <a class="navbar-brand" href="#">Remember the Oreos</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Find Shopping List</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><router-link to="/">Home</router-link></li>
+                    <li><router-link to="/createList">Create List</router-link></li>
+                    <li><router-link to="/list-shopping-list">List Shoppings Lists</router-link></li>
                 </ul>
             </div>
         </nav>

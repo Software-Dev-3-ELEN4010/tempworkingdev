@@ -1,34 +1,41 @@
 <template>
   <div id="app">
     <div class="container">
-      <div class="row col-md-6 offset-md-3">
-        <create-list></create-list>
-        <navbar></navbar><list-shopping-lists></list-shopping-lists>
-      </div>
+      <navbar></navbar>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
-
 <script>
-  import CreateList from './CreateList.vue';
-  import ListShoppingLists from './ListShoppingLists.vue';
   import navbar from './navbar.vue'
   export default {
     name: 'app',
-    data() {
-      return {}
-    },
-    components: {navbar,CreateList, ListShoppingLists},
+    components: {navbar}
   }
 </script>
+
 <style>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity .5s
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
   }
-  .fade-enter,
-  .fade-leave-active {
-    opacity: 0
+  h1, h2 {
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    color: #42b983;
   }
 </style>

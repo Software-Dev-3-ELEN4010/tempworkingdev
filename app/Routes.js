@@ -4,6 +4,11 @@ var express = require('express')
 var shoppingListRoutes = express.Router()
 var ShoppingList = require('./ShoppingList')
 
+shoppingListRoutes.route('/').get(function (req,res) {
+
+  res.sendfile(__dirname)
+})
+
 // Retrieve all items from the shopping
 shoppingListRoutes.route('/all').get(function (req, res, next) {
   ShoppingList.find(function (err, shoppingList) {

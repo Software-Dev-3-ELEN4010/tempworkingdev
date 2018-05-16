@@ -1,14 +1,15 @@
-'use strict'
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import './font-awesome/css/font-awesome.css'
 import App from './components/App.vue'
-// Disabling eslint here because it does not support Vue
-new Vue({ // eslint-disable-line
+import router from './router'
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
   el: 'app',
-  created: function () {
-    console.log('root instance was created')
-  },
-  components: {App},
-  methods: {}
+  router,
+  template: '<App/>',
+  components: { App }
 })
