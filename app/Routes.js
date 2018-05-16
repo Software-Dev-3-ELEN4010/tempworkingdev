@@ -8,7 +8,7 @@ var ShoppingList = require('./ShoppingList')
 var User = require('./User')
 
 shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
-  User.find({googleEmail: req.body.googleEmail}, function (err, res) {
+  User.find({googleId: req.body.googleId}, function (err, res) {
     if (res.length) {
       console.log('user is already added')
     } else {
@@ -30,6 +30,27 @@ shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
     }
     if (err) {
       return next(new Error(err))
+    }
+  })
+})
+
+shoppingListRoutes.route('/usersLists/:id').get(function (req, callres, next) {
+  console.log('in API')
+  var id = req.params.id
+  User.find({googleId: id}, function (err, res) {
+    if (res.length) {
+      if (err) {
+        return next(new Error(err))
+      }
+      var usersListsIds = res[0].userShoppingLists
+      console.log(usersListsIds)
+      ShoppingList.find({_id: {$in: usersListsIds}}, function (err, res) {
+        if (err) {
+          console.log(err)
+        }
+        console.log(res)
+        callres.json(res)
+      })
     }
   })
 })
@@ -83,7 +104,7 @@ shoppingListRoutes.route('/deleteItem/:id').get(function (req, res, next) {
     }
     var newItems = shoppingList.items.filter(function (item) {
       // this is linting error is ignored cause it needs != not !==
-      return item._id != id.substring(24, 48) // eslint-disable-line
+            return item._id != id.substring(24, 48) // eslint-disable-line
     })
     console.log(newItems)
     shoppingList.items = newItems
@@ -94,7 +115,8 @@ shoppingListRoutes.route('/deleteItem/:id').get(function (req, res, next) {
         } else {
           res.status(200).json(shoppingList)
         }
-      }})
+      }
+    })
   })
 })
 

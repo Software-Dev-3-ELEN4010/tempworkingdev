@@ -32,7 +32,7 @@
                 console.log(profile)
                 console.log(profile.getId())
                 console.log(profile.getEmail())
-                this.$session.set('profileID',profile.getId())
+                this.$session.set('profileId',profile.getId())
                 this.$session.set('profilePhoto',profile.getImageUrl())
                 let param = {
                     googleId: profile.getId(),
@@ -40,6 +40,7 @@
                     googleEmail: profile.getEmail(),
                     googlePhoto: profile.getImageUrl(),
                 }
+                console.log(profile.getId())
                 axios.post('/api/addUser', param).then((response) => {
                     console.log("user added to db");
                 }).catch((error) => {

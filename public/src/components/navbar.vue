@@ -8,11 +8,12 @@
                 <ul class="nav navbar-nav">
                     <li><router-link to="/">Home</router-link></li>
                     <li><router-link to="/createList">Create List</router-link></li>
-                    <li><router-link to="/list-shopping-list">List Shoppings Lists</router-link></li>
+                    <li><router-link to="/listShoppingList">List Shoppings Lists</router-link></li>
+                    <li><router-link to="/MyLists">My Lists</router-link></li>
                     <li v-if="login==undefined"><login></login></li>
                     <li v-if="login!=undefined">
                         <button class="g-signin-button" v-on:click="logout()">Log out</button>
-     ID                   <img v-bind:src="userPhoto">
+                        <img v-bind:src="userPhoto">
                     </li>
                 </ul>
             </div>
@@ -39,10 +40,10 @@
 
         methods: {
             setLoginState(){
-                this.login = this.$session.get('profileID')
+                this.login = this.$session.get('profileId')
             },
             logout(){
-                this.$session.set('profileID',undefined)
+                this.$session.set('profileId',undefined)
                 this.setLoginState()
             }
         },

@@ -79,7 +79,6 @@
                 axios.get('/api/all').then((response) => {
                     this.shoppingLists = response.data;
                     console.log(this.shoppingLists)
-
                 });
             },
             deleteShoppingList(id){

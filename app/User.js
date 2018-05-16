@@ -15,11 +15,7 @@ var user = new mongoose.Schema({
   googlePhoto: {
     type: String
   },
-
-  userShoppingLists: [{
-    id: {type: String}
-  }
-  ]
+  userShoppingLists: [String]
 },
 {
   collection: 'users'

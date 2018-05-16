@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // import Login from '../components/Login.vue'
 import CreateList from '../components/CreateList.vue'
 import ListShoppingLists from '../components/ListShoppingLists.vue'
+import MyLists from '../components/MyLists.vue'
 
 Vue.use(Router)
 
@@ -20,9 +21,14 @@ export default new Router({
       component: CreateList
     },
     {
-      path: '/list-shopping-list',
+      path: '/listShoppingList',
       name: 'ListShoppingLists',
       component: ListShoppingLists
+    },
+    {
+      path: '/MyLists',
+      name: 'MyLists',
+      component: MyLists
     }
   ]
 })
