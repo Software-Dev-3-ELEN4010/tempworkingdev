@@ -12739,18 +12739,53 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data() {
         return {
-            shoppingLists: []
+            shoppingLists: [],
+            sharingList: [],
+            sharing: false
         };
     },
     created: function () {
         this.fetchshoppingList();
     },
     methods: {
+        share() {
+            this.sharing = true;
+        },
         fetchshoppingList() {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/all').then(response => {
                 this.shoppingLists = response.data;
@@ -12776,6 +12811,19 @@ module.exports = Cancel;
             console.log(param);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addItem/' + listId, param).then(response => {
                 console.log("added to db");
+                this.typing = false;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        addToShareList(event) {
+            if (this.email != '') {
+                this.sharingList.push(this.email);
+                this.email = '';
+            }
+        },
+        send(listid) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/shareList/' + listid, { sharingList: this.sharingList }).then(response => {
                 this.typing = false;
             }).catch(error => {
                 console.log(error);
@@ -18119,6 +18167,100 @@ var render = function() {
                   [_vm._v("Add item")]
                 ),
                 _vm._v(" "),
+                !_vm.sharing
+                  ? _c("div", [
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.share()
+                            }
+                          }
+                        },
+                        [_vm._v("Share")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.sharing
+                  ? _c("div", [
+                      _c("div", { staticClass: "row" }, [
+                        _c("h3", [_vm._v("select members to share with")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.email,
+                                expression: "email"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "Email" },
+                            domProps: { value: _vm.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.email = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.addToShareList($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Add Email")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _vm.sharingList != 0
+                            ? _c("div", [
+                                _c("h3", [_vm._v("Sharing List")]),
+                                _vm._v(" "),
+                                _c(
+                                  "table",
+                                  [
+                                    _vm._m(1, true),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.sharingList, function(email) {
+                                      return _c("tr", [
+                                        _c("td", [_vm._v(_vm._s(email))])
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.send(shoppingList._id)
+                            }
+                          }
+                        },
+                        [_vm._v("Send Invites")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
@@ -18160,6 +18302,12 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [_c("th", [_vm._v("Email")])])
   }
 ]
 render._withStripped = true

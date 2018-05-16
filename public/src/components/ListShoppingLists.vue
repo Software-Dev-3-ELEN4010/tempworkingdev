@@ -54,6 +54,36 @@
                     <span>Select category</span>
 
                     <button v-on:click="addItemToShoppingList(shoppingList._id)">Add item</button>
+
+                    <!--sharing-->
+                    <div v-if="!sharing">
+                        <button v-on:click="share()">Share</button>
+                    </div>
+                    <div v-if="sharing">
+                        <div class="row">
+                            <h3>select members to share with</h3>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" placeholder="Email" v-model="email">
+                                <button v-on:click="addToShareList($event)">Add Email</button>
+                            </div>
+                            <div class="row">
+                                <div v-if="sharingList!=0">
+                                    <h3>Sharing List</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Email</th>
+                                        </tr>
+                                        <tr v-for="email in sharingList">
+                                            <td>{{email}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <button v-on:click="send(shoppingList._id)">Send Invites</button>
+                    </div>
+
                     <button v-on:click="deleteShoppingList(shoppingList._id)">Delete List</button>
                     <hr>
 
@@ -68,13 +98,18 @@
     export default {
         data() {
             return {
-                shoppingLists: []
+                shoppingLists: [],
+                sharingList:[],
+                sharing: false
             }
         },
         created: function() {
             this.fetchshoppingList();
         },
         methods: {
+            share(){
+                this.sharing = true
+            },
             fetchshoppingList() {
                 axios.get('/api/all').then((response) => {
                     this.shoppingLists = response.data;
@@ -105,7 +140,37 @@
                 }).catch((error) => {
                     console.log(error);
                 })
+            },
+            addToShareList(event) {
+                if (this.email != '') {
+                    this.sharingList.push(this.email)
+                    this.email = ''
+                }
+            },
+            send(listid){
+                axios.post('/api/shareList/' + listid, {sharingList: this.sharingList}).then((response) => {
+                    this.typing = false;
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
         }
     }
 </script>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
