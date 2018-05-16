@@ -65,6 +65,7 @@
     data() {
       return {
         items: [],
+          sharing: [],
         typing: false,
         shoppingListName: '',
         editableCheckbox: false,
@@ -80,10 +81,10 @@
             editable: this.editableCheckbox,
             visible: this.visibleCheckbox,
             items: this.items,
-            creator: "test",
+            creator: this.$session.get('profileId'),
             quantity: 0
           };
-          axios.post('/api/add', param).then((response) => {
+          axios.post('/api/add/'+this.$session.get('profileId'), param).then((response) => {
             console.log("added to db");
             this.typing = false;
           }).catch((error) => {

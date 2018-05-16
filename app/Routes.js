@@ -65,7 +65,7 @@ shoppingListRoutes.route('/all').get(function (req, res, next) {
   })
 })
 // create a shoppingList and add to database
-shoppingListRoutes.route('/add').post(function (req, res) {
+shoppingListRoutes.route('/add/:id').post(function (req, res) {
   ShoppingList.create(
     {
       listName: req.body.listName,
@@ -78,6 +78,14 @@ shoppingListRoutes.route('/add').post(function (req, res) {
       if (error) {
         res.status(400).send('Unable to create shopping list')
       }
+      console.log(shoppingList._id)
+      console.log(req.params.id)
+      var newlyAddedListId = shoppingList._id
+      User.update({googleId: req.params.id}, {$push: {userShoppingLists: newlyAddedListId}}, function (err, model) {
+        if (err) {
+          console.log(err)
+        }
+      })
       res.status(200).json(shoppingList)
     }
   )

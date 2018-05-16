@@ -6,15 +6,27 @@
                     <a class="navbar-brand" href="/">Remember the Oreos</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><router-link to="/">Home</router-link></li>
-                    <li><router-link to="/createList">Create List</router-link></li>
-                    <li><router-link to="/listShoppingList">List Shoppings Lists</router-link></li>
-                    <li><router-link to="/MyLists">My Lists</router-link></li>
-                    <li v-if="login==undefined"><login></login></li>
-                    <li v-if="login!=undefined">
-                        <button class="g-signin-button" v-on:click="logout()">Log out</button>
-                        <img v-bind:src="userPhoto">
+                    <li>
+                        <router-link to="/">Home</router-link>
                     </li>
+                    <li v-if="login==undefined">
+                        <login></login>
+                    </li>
+                    <div v-if="login!=undefined">
+                        <li>
+                            <router-link to="/createList">Create New List</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/listShoppingList">Public Shoppings Lists</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/MyLists">My Lists</router-link>
+                        </li>
+                        <li>
+                            <button class="g-signin-button" v-on:click="logout()">Log out</button>
+                        </li>
+                        <li><img v-bind:src="userPhoto"></li>
+                    </div>
                 </ul>
             </div>
         </nav>
@@ -30,7 +42,11 @@
                 userPhoto: undefined
             }
         },
-        created: function (){
+        created: function () {
+            if (this.$session.get('profileId')==undefined){
+                this.$router.push("/")
+            }
+            console.log(this.$session.get('profileId'))
             setTimeout(() => {
                 console.log("times over");
                 this.setLoginState()
@@ -43,12 +59,13 @@
                 this.login = this.$session.get('profileId')
             },
             logout(){
-                this.$session.set('profileId',undefined)
+                this.$session.set('profileId', undefined)
                 this.setLoginState()
+                this.$router.push("/")
             }
         },
 
-        components : {Login}
+        components: {Login}
     }
 </script>
 

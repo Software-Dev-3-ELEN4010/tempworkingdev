@@ -9,43 +9,46 @@ chai.use(chaiHttp)
 var expect = chai.expect
 
 describe('Adding new Shopping List', () => {
-  let listItem = {
-    listName: 'Testing List',
-    editable: true,
-    visible: false,
-    items: [
-      { 'name': 'testItem1',
-        'quantity': 1,
-        'shop': 'Woolworths',
-        'category': 'other'}, 
-      { 'name': 'testItem2',
-        'quantity': 2,
-        'shop': 'Woolworths',
-        'category': 'toy'
-        }],
-    creator: 'CreatorTest'
-  }
-  it('Should add a new shopping list, with correct parameters', (done) => {
-    chai.request(server)
-      .post('/api/add')
-      .send(listItem)
-      .end((err, res) => {
-        res.should.have.status(200)
-        res.body.listName.should.equal('Testing List')
-        res.body.editable.should.equal(true)
-        res.body.visible.should.equal(false)
-        res.body.items[0].name.should.equal('testItem1')
-        res.body.items[0].quantity.should.equal(1)
-        res.body.items[0].shop.should.equal('Woolworths')
-        res.body.items[0].category.should.equal('other')
-        res.body.items[1].name.should.equal('testItem2')
-        res.body.items[1].quantity.should.equal(2)
-        res.body.items[1].shop.should.equal('Woolworths')
-        res.body.items[1].category.should.equal('toy')
-        res.body.creator.should.equal('CreatorTest')
-        done()
-      })
-  })
+    let listItem = {
+        listName: 'Testing List',
+        editable: true,
+        visible: false,
+        items: [
+            {
+                'name': 'testItem1',
+                'quantity': 1,
+                'shop': 'Woolworths',
+                'category': 'other'
+            },
+            {
+                'name': 'testItem2',
+                'quantity': 2,
+                'shop': 'Woolworths',
+                'category': 'toy'
+            }],
+        creator: 'CreatorTest'
+    }
+    it('Should add a new shopping list, with correct parameters', (done) => {
+        chai.request(server)
+            .post('/api/add/117557445192175959912')
+            .send(listItem)
+            .end((err, res) => {
+                res.should.have.status(200)
+                res.body.listName.should.equal('Testing List')
+                res.body.editable.should.equal(true)
+                res.body.visible.should.equal(false)
+                res.body.items[0].name.should.equal('testItem1')
+                res.body.items[0].quantity.should.equal(1)
+                res.body.items[0].shop.should.equal('Woolworths')
+                res.body.items[0].category.should.equal('other')
+                res.body.items[1].name.should.equal('testItem2')
+                res.body.items[1].quantity.should.equal(2)
+                res.body.items[1].shop.should.equal('Woolworths')
+                res.body.items[1].category.should.equal('toy')
+                res.body.creator.should.equal('CreatorTest')
+                done()
+            })
+    })
 })
 
 
@@ -85,10 +88,6 @@ describe('Adding new Shopping List', () => {
 //       })
 //   })
 // })
-
-
-
-
 
 
 //  // 200 status code indicates success, whereas a 400 status codes indicates an error

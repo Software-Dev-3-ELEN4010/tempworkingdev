@@ -12133,6 +12133,18 @@ Vue.compile = compileToFunctions;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12143,6 +12155,10 @@ Vue.compile = compileToFunctions;
         };
     },
     created: function () {
+        if (this.$session.get('profileId') == undefined) {
+            this.$router.push("/");
+        }
+        console.log(this.$session.get('profileId'));
         setTimeout(() => {
             console.log("times over");
             this.setLoginState();
@@ -12157,6 +12173,7 @@ Vue.compile = compileToFunctions;
         logout() {
             this.$session.set('profileId', undefined);
             this.setLoginState();
+            this.$router.push("/");
         }
     },
 
@@ -12570,6 +12587,7 @@ module.exports = Cancel;
   data() {
     return {
       items: [],
+      sharing: [],
       typing: false,
       shoppingListName: '',
       editableCheckbox: false,
@@ -12585,10 +12603,10 @@ module.exports = Cancel;
           editable: this.editableCheckbox,
           visible: this.visibleCheckbox,
           items: this.items,
-          creator: "test",
+          creator: this.$session.get('profileId'),
           quantity: 0
         };
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/add', param).then(response => {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/add/' + this.$session.get('profileId'), param).then(response => {
           console.log("added to db");
           this.typing = false;
         }).catch(error => {
@@ -14299,54 +14317,56 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/createList" } }, [
-                _vm._v("Create List")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/listShoppingList" } }, [
-                _vm._v("List Shoppings Lists")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/MyLists" } }, [
-                _vm._v("My Lists")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
           _vm.login == undefined ? _c("li", [_c("login")], 1) : _vm._e(),
           _vm._v(" "),
           _vm.login != undefined
-            ? _c("li", [
+            ? _c("div", [
                 _c(
-                  "button",
-                  {
-                    staticClass: "g-signin-button",
-                    on: {
-                      click: function($event) {
-                        _vm.logout()
-                      }
-                    }
-                  },
-                  [_vm._v("Log out")]
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: "/createList" } }, [
+                      _vm._v("Create New List")
+                    ])
+                  ],
+                  1
                 ),
                 _vm._v(" "),
-                _c("img", { attrs: { src: _vm.userPhoto } })
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: "/listShoppingList" } }, [
+                      _vm._v("Public Shoppings Lists")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: "/MyLists" } }, [
+                      _vm._v("My Lists")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "g-signin-button",
+                      on: {
+                        click: function($event) {
+                          _vm.logout()
+                        }
+                      }
+                    },
+                    [_vm._v("Log out")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [_c("img", { attrs: { src: _vm.userPhoto } })])
               ])
             : _vm._e()
         ])
