@@ -48,6 +48,11 @@
                     console.log(error);
                 })
                 location.reload()
+                this.$notify({
+                    group: 'foo',
+                    title: 'Logged in!',
+                    text: 'You have authorised your account with Google'
+                });
             },
             onSignInError (error) {
                 // `error` contains any error occurred.

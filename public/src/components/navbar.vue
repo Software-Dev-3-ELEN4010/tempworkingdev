@@ -1,36 +1,38 @@
 <template>
-    <div>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Remember the Oreos</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <router-link to="/">Home</router-link>
-                    </li>
-                    <li v-if="login==undefined">
-                        <login></login>
-                    </li>
-                    <div v-if="login!=undefined">
-                        <li>
-                            <router-link to="/createList">Create New List</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/listShoppingList">Public Shoppings Lists</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/MyLists">My Lists</router-link>
-                        </li>
-                        <li>
-                            <button class="g-signin-button" v-on:click="logout()">Log out</button>
-                        </li>
-                        <li><img v-bind:src="userPhoto"></li>
-                    </div>
-                </ul>
-            </div>
-        </nav>
-    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Remember The Oreos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" v-if="login!=undefined">
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/createList">Create List</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/listShoppingList">Public Lists</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/MyLists">My Lists</router-link>
+                </li>
+                <li class="nav-item">
+                    <button class="button button-primary" v-on:click="logout()">Log out</button>
+                </li>
+                <li><img height="60px" class="nav-link" v-bind:src="userPhoto"></li>
+                <li>{{profileName}}</li>
+            </ul>
+            <ul v-if="login==undefined" class="navbar-nav mr-auto">
+                <li>
+                    <login class="nav-link"></login>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
 </template>
 
 <script>
@@ -39,11 +41,12 @@
         data() {
             return {
                 login: undefined,
-                userPhoto: undefined
+                userPhoto: undefined,
+                profileName: undefined
             }
         },
         created: function () {
-            if (this.$session.get('profileId')==undefined){
+            if (this.$session.get('profileId') == undefined) {
                 this.$router.push("/")
             }
             console.log(this.$session.get('profileId'))
@@ -52,6 +55,7 @@
                 this.setLoginState()
             }, 2000);
             this.userPhoto = this.$session.get('profilePhoto')
+            this.profileName = this.$session.get('profileName')
         },
 
         methods: {
@@ -68,14 +72,3 @@
         components: {Login}
     }
 </script>
-
-<style>
-    .g-signin-button {
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 3px;
-        background-color: #3c82f7;
-        color: #fff;
-        box-shadow: 0 3px 0 #0f69ff;
-    }
-</style>

@@ -3,15 +3,15 @@
     <div>
         <div class="col-md-12" v-show="shoppingLists.length>0">
             <h2>All Public Shopping List</h2>
-            <div class="row mrb-10" v-for="shoppingList in shoppingLists">
+            <div class="row" v-for="shoppingList in shoppingLists">
                 <div v-show="shoppingList.visible==true">
-                    <h4>{{shoppingList.listName}}</h4>
+                    <h5>{{shoppingList.listName}}</h5>
                     <strong>List Creator</strong> {{shoppingList.creator}}
                     <strong>Public</strong> {{shoppingList.visible}}
                     <strong>Editable</strong> {{shoppingList.editable}}
                     <div v-if="shoppingList.items.length!=0">
                         <h3>Current Shopping List Items</h3>
-                        <table>
+                        <table class="table">
                             <tr>
                                 <th>Status</th>
                                 <th>Item</th>
@@ -166,20 +166,3 @@
         }
     }
 </script>
-
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>

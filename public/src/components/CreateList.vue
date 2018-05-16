@@ -2,6 +2,7 @@
     <div>
         <h1> Create Shopping List </h1>
         <form @submit.prevent>
+
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Shopping list name" v-model="shoppingListName">
                 <input type="checkbox" id="editableCheckbox" v-model="editableCheckbox">
@@ -11,33 +12,60 @@
                 <hr>
 
                 <h3>Add new item to new shopping list</h3>
-                <div class="input-group">
 
-                    <input type="text" class="form-control" placeholder="Item name" v-model="name">
-                    <input type="number" min="1" class="form-control" v-model="quantity">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="name">Item Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Item name" v-model="name">
+                    </div>
+                    <div class="col-2">
+                        <label for="number">Select quantity</label>
+                        <input type="number" id="number" min="1" class="form-control" v-model="quantity">
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="sel1">Select category</label>
+                            <select class="form-control" id="sel1" v-model="category">
+                                <option>Food</option>
+                                <option>Toys</option>
+                                <option>Stationary</option>
+                                <option>Cloths</option>
+                                <option>Toiletries</option>
+                                <option>Pets</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="sel2">Select Shop</label>
+                            <select class="form-control" id="sel2" v-model="shop">
+                                <option>Woolworths</option>
+                                <option>Pick 'n Pay</option>
+                                <option>Checkers</option>
+                                <option>Toys 'R Us</option>
+                                <option>CNA</option>
+                                <option>Edgers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-2">
+
+                        <!-- Rounded switch -->
+                        <label for="switch">Complete</label>
+                        <br>
+                        <label id="switch" class="switch">
+                            <input type="checkbox" class="checkbox" id="completeCheckbox" v-model="done">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <button v-on:click="addItemToList($event)" class="button btn-success">+</button>
+                    </div>
                 </div>
-                <input type="checkbox" id="completeCheckbox" v-model="done">
-                <label for="checkbox">Complete</label>
-                <select v-model="shop">
-                    <option disabled value="">Please select one</option>
-                    <option>Woolworths</option>
-                    <option>Pick 'n Pay</option>
-                    <option>Checkers</option>
-                </select>
-                <span>Select shop</span>
 
-                <select v-model="category">
-                    <option disabled value="">Please select one</option>
-                    <option>Food</option>
-                    <option>Toys</option>
-                    <option>Other</option>
-                </select>
-                <span>Select category</span>
-                <button v-on:click="addItemToList($event)">Add Item</button>
-
-                <div v-if="items.length!=0">
+                <div v-if="items.length!=0" class="row">
                     <h3>Current Shopping List Items</h3>
-                    <table>
+                    <table class="table">
                         <tr>
                             <th>Status</th>
                             <th>Item</th>
@@ -55,34 +83,41 @@
                     </table>
                 </div>
                 <!--sharing-->
-                <div v-if="!sharing">
-                    <button v-on:click="share()">Share</button>
-                </div>
+
+
                 <div v-if="sharing">
                     <div class="row">
-                        <h3>select members to share with</h3>
-                        <div class="input-group">
+                        <div class="col">
+                            <h3>select members to share with</h3>
+                            <div class="input-group">
 
-                            <input type="text" class="form-control" placeholder="Email" v-model="email">
-                            <button v-on:click="addToShareList($event)">Add Email</button>
-                        </div>
-                        <div class="row">
-                            <div v-if="sharingList!=0">
-                                <h3>Sharing List</h3>
-                                <table>
-                                    <tr>
-                                        <th>Email</th>
-                                    </tr>
-                                    <tr v-for="email in sharingList">
-                                        <td>{{email}}</td>
-                                    </tr>
-                                </table>
+                                <input type="text" class="form-control" placeholder="Email" v-model="email">
+                                <button v-on:click="addToShareList($event)" class="button btn-info">Add Email</button>
+                            </div>
+                            <div class="row">
+                                <div v-if="sharingList!=0">
+                                    <h3>Sharing List</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Email</th>
+                                        </tr>
+                                        <tr v-for="email in sharingList">
+                                            <td>{{email}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button v-on:click="saveShoppingList($event)">Save</button>
-
+                <div class="row">
+                    <div class="col">
+                        <button v-on:click="share()" class="button btn-info">Share</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary" v-on:click="saveShoppingList($event)">Save List</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -109,7 +144,7 @@
         },
         methods: {
             share(){
-                this.sharing = true
+                this.sharing = !this.sharing
             },
 
             saveShoppingList(event) {
@@ -135,9 +170,20 @@
                         console.log(error);
                     })
                 }
+                this.$notify({
+                    group: 'foo',
+                    title: 'List Saved',
+                    text: 'The list has been added to your account'
+                });
             },
             addItemToList(event) {
-                this.items.push({name: this.name, quantity: this.quantity, shop: this.shop, category: this.category, done:this.done})
+                this.items.push({
+                    name: this.name,
+                    quantity: this.quantity,
+                    shop: this.shop,
+                    category: this.category,
+                    done: this.done
+                })
                 this.name = ''
                 this.quantity = 0
                 this.shop = ''
@@ -155,18 +201,64 @@
 </script>
 
 <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
     }
 
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
+    /* Hide default HTML checkbox */
+    .switch input {
+        display: none;
     }
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
     }
 </style>
