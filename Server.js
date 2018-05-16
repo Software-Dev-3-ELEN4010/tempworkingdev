@@ -10,13 +10,12 @@ var config = require('./app/Config')
 
 // Establish connection to db
 
+var connection = config.DB
 if (process.env.NODE_ENV === 'test') {
-  console.log('Server Connected to Test DB')
-  mongoose.connect(config.TEST_DB)
-} else {
-  console.log('Server Connected to Main DB')
-  mongoose.connect(config.DB)
+  connection = config.TEST_DB
 }
+
+mongoose.connect(connection)
 
 // Sends static files from the public path directory to the server
 app.use(express.static(path.join(__dirname, '/public')))

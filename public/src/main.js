@@ -9,9 +9,9 @@ Vue.use(VModal)
 Vue.use(VueSession, {persist: true})
 Vue.use(GSignInButton)
 Vue.config.productionTip = false
-Vue.config.devtools = false;
-Vue.config.debug = false;
-Vue.config.silent = true;
+Vue.config.devtools = false
+Vue.config.debug = false
+Vue.config.silent = true
 
 /* eslint-disable no-new */
 new Vue({

@@ -50,11 +50,7 @@ describe('Adding new Shopping List', () => {
                 done()
             })
     })
-
-
 })
-
-
 
 describe('Deletion of Shopping List and Items', () => {
     let creatorID = '117557445192175959912'
@@ -78,10 +74,9 @@ describe('Deletion of Shopping List and Items', () => {
         creator: creatorID
     }
 
-
     it('Should not delete the invalid list', (done) => {
     chai.request(server)
-      .get('/api/delete/12345') // remove a random entry (does not exist as on test DB)
+      .get('/api/delete/12345') 
       .end(function (err, res) {
         res.status.should.equal(500)
         done()
@@ -90,7 +85,7 @@ describe('Deletion of Shopping List and Items', () => {
 
     it('Should not delete the invalid item', (done) => {
         chai.request(server)
-            .get('/api/deleteItem/12345') // remove a random entry (does not exist as on test DB)
+            .get('/api/deleteItem/12345')
             .end(function (err, res) {
             res.status.should.equal(500)
             done()
@@ -99,7 +94,7 @@ describe('Deletion of Shopping List and Items', () => {
 
     it('Should not update the invalid item', (done) => {
         chai.request(server)
-            .get('/api/addItem/12345') // remove a random entry (does not exist as on test DB)
+            .get('/api/addItem/12345') 
             .end(function (err, res) {
             res.status.should.equal(404)
             done()
@@ -128,9 +123,11 @@ describe('Deletion of Shopping List and Items', () => {
     //     .send(listItem)
     //     .end((err, res) => {
     //         res.should.have.status(200)
+    //         console.log(res.body)
     //         itemID = res.body.items[0]._id
+            
     //         chai.request(server)
-    //         .get('/deleteItem/' + itemID)
+    //         .get('/api/deleteItem/' + itemID)
     //         .end(function (err, res) {
     //             res.should.have.status(200)
     //         })
@@ -165,14 +162,102 @@ describe('Adding new User to the DB', () => {
                 done()
             })
     })
-    it('Should not ', (done) => {
+    it('Should not add user', (done) => {
         chai.request(server)
-          .get('/api/addUser') // remove a random entry (does not exist as on test DB)
+          .get('/api/addUser')
           .end(function (err, res) {
             res.status.should.equal(404)
             done()
           })
     })
+
+
+})
+
+//////////////////// fix this 200 test 
+
+describe('UserLists', () => {
+
+    it('Should not add user ', (done) => {
+        chai.request(server)
+          .get('/api/usersLists/' + 123) // remove a random entry (does not exist as on test DB)
+          .end(function (err, res) {
+              console.log(res.body)
+            res.status.should.equal(200)
+            done()
+          })
+    })
+    
+})
+
+describe('Share Lists', () => {
+
+    it('Should not add shared lists', (done) => {
+        chai.request(server)
+          .get('/api/shareList/' + 12345) // remove a random entry (does not exist as on test DB)
+          .end(function (err, res) {
+              console.log(res.body)
+            res.status.should.equal(404)
+            done()
+          })
+    })
+
+    it('Should not add shared lists', (done) => {
+        chai.request(server)
+          .get('/api/shareList/' + 12345) // remove a random entry (does not exist as on test DB)
+          .end(function (err, res) {
+              console.log(res.body)
+            res.status.should.equal(404)
+            done()
+          })
+    })
+
+})
+
+
+
+
+describe('Deletion of Shopping List and Items', () => {
+    let creatorID = '117557445192175959912'
+    let listItem = {
+        listName: 'Testing List',
+        editable: true,
+        visible: false,
+        items: [
+            {
+                'name': 'testItem1',
+                'quantity': 1,
+                'shop': 'Woolworths',
+                'category': 'other'
+            },
+            {
+                'name': 'testItem2',
+                'quantity': 2,
+                'shop': 'Woolworths',
+                'category': 'toy'
+            }],
+        creator: creatorID
+    }
+
+    let updated = {
+        listName: 'Testing List',
+        editable: true,
+        visible: false,
+        items: [
+            {
+                'name': 'updateItemName',
+                'quantity': 1,
+                'shop': 'Woolworths',
+                'category': 'other'
+            },
+            {
+                'name': 'testItem2',
+                'quantity': 2,
+                'shop': 'Woolworths',
+                'category': 'toy'
+            }],
+        creator: creatorID
+    }
 })
 
 

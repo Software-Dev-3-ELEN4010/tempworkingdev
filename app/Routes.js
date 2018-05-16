@@ -5,28 +5,27 @@ var shoppingListRoutes = express.Router()
 var ShoppingList = require('./ShoppingList')
 var User = require('./User')
 
-
-shoppingListRoutes.route('/markDone').post(function (req,callres,next) {
-    var listId = req.body.listId
-    var itemId = req.body.itemId
-    var done = req.body.done
-    ShoppingList.update({_id:listId, "items._id":itemId},{$set: {"items.$.done":done}},function(err,model){
-        if(err){
-            console.log(err)
-        }
-    })
+shoppingListRoutes.route('/markDone').post(function (req, callres, next) {
+  var listId = req.body.listId
+  var itemId = req.body.itemId
+  var done = req.body.done
+  ShoppingList.update({_id: listId, 'items._id': itemId}, {$set: {'items.$.done': done}}, function (err, model) {
+    if (err) {
+      console.log(err)
+    }
+  })
 })
 
-shoppingListRoutes.route('/copyList').post(function(req,callres,next){
-    var listId = req.body.listId
-    var userId = req.body.userId
-    console.log(listId)
-    console.log(userId)
-    User.update({googleId: userId}, {$push: {userShoppingLists: listId}}, function (err, model) {
-        if (err) {
-            console.log(err)
-        }
-    })
+shoppingListRoutes.route('/copyList').post(function (req, callres, next) {
+  var listId = req.body.listId
+  var userId = req.body.userId
+  console.log(listId)
+  console.log(userId)
+  User.update({googleId: userId}, {$push: {userShoppingLists: listId}}, function (err, model) {
+    if (err) {
+      console.log(err)
+    }
+  })
 })
 
 shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
@@ -44,7 +43,7 @@ shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
         },
         function (error, shoppingList) {
           if (error) {
-            callres.status(400).send('Unable to new user shopping list')
+            return next(new Error(err))
           }
           callres.status(200).json(shoppingList)
         }
@@ -57,7 +56,6 @@ shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
 })
 
 shoppingListRoutes.route('/usersLists/:id').get(function (req, callres, next) {
-  console.log('in API')
   var id = req.params.id
   User.find({googleId: id}, function (err, res) {
     if (res.length) {
@@ -65,14 +63,14 @@ shoppingListRoutes.route('/usersLists/:id').get(function (req, callres, next) {
         return next(new Error(err))
       }
       var usersListsIds = res[0].userShoppingLists
-      console.log(usersListsIds)
       ShoppingList.find({_id: {$in: usersListsIds}}, function (err, res) {
         if (err) {
           console.log(err)
         }
-        console.log(res)
         callres.json(res)
       })
+    } else {
+      return next(new Error(err))
     }
   })
 })
@@ -88,6 +86,9 @@ shoppingListRoutes.route('/all').get(function (req, res, next) {
 })
 
 shoppingListRoutes.route('/shareList/:id').post(function (req, res) {
+  if (res) {
+    console.log(res)
+  }
   var listId = req.params.id
   console.log('share!')
   var sharingList = req.body.sharingList
@@ -173,30 +174,6 @@ shoppingListRoutes.route('/addItem/:id').post(function (req, res, next) {
   ShoppingList.update({_id: req.params.id}, {$push: {items: req.body.item}}, function (err, model) {
     if (err) {
       console.log(err)
-    }
-  })
-})
-
-// Update existing item in the database
-shoppingListRoutes.route('/update/:id').post(function (req, res, next) {
-  var id = req.params.id
-  ShoppingList.findById(id, function (error, shoppingList) {
-    if (error) {
-      return next(new Error('Item was not found'))
-    } else {
-      shoppingList.item = req.body.item
-      shoppingList.creator = req.body.creator
-      shoppingList.quantity = req.body.quantity
-
-      shoppingList.save({
-        function (error, shoppingList) {
-          if (error) {
-            res.status(400).send('Unable to update item on shopping list')
-          } else {
-            res.status(200).json(shoppingList)
-          }
-        }
-      })
     }
   })
 })
