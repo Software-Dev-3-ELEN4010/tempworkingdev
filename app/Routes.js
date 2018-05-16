@@ -1,5 +1,4 @@
 'use strict'
-
 var express = require('express')
 var shoppingListRoutes = express.Router()
 var ShoppingList = require('./ShoppingList')
@@ -164,7 +163,7 @@ shoppingListRoutes.route('/deleteItem/:id').get(function (req, res, next) {
 shoppingListRoutes.route('/addItem/:id').post(function (req, res, next) {
   ShoppingList.update({_id: req.params.id}, {$push: {items: req.body.item}}, function (err, model) {
     if (err) {
-      console.log(err)
+      return next(new Error('add item Failed'))
     }
   })
 })

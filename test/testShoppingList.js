@@ -83,6 +83,15 @@ describe('Deletion of Shopping List and Items', () => {
       })
     })
 
+    it('Should not delete the invalid list', (done) => {
+        chai.request(server)
+          .get('/api/delete/12345') 
+          .end(function (err, res) {
+            res.status.should.equal(500)
+            done()
+          })
+        })
+
     it('Should not delete the invalid item', (done) => {
         chai.request(server)
             .get('/api/deleteItem/12345')
@@ -117,28 +126,7 @@ describe('Deletion of Shopping List and Items', () => {
         })
     })
 
-    // it('Should add a new shopping list, and delete item', (done) => {
-    //     chai.request(server)
-    //     .post('/api/add/' + creatorID)
-    //     .send(listItem)
-    //     .end((err, res) => {
-    //         res.should.have.status(200)
-    //         console.log(res.body)
-    //         itemID = res.body.items[0]._id
-            
-    //         chai.request(server)
-    //         .get('/api/deleteItem/' + itemID)
-    //         .end(function (err, res) {
-    //             res.should.have.status(200)
-    //         })
-    //     done()
-    //     })
-    // })
-
 })
-
-
-
 
 describe('Adding new User to the DB', () => {
     userID = '' + Math.random()*10000000
@@ -174,50 +162,7 @@ describe('Adding new User to the DB', () => {
 
 })
 
-//////////////////// fix this 200 test 
-
-describe('UserLists', () => {
-
-    it('Should not add user ', (done) => {
-        chai.request(server)
-          .get('/api/usersLists/' + 123) // remove a random entry (does not exist as on test DB)
-          .end(function (err, res) {
-              console.log(res.body)
-            res.status.should.equal(200)
-            done()
-          })
-    })
-    
-})
-
-describe('Share Lists', () => {
-
-    it('Should not add shared lists', (done) => {
-        chai.request(server)
-          .get('/api/shareList/' + 12345) // remove a random entry (does not exist as on test DB)
-          .end(function (err, res) {
-              console.log(res.body)
-            res.status.should.equal(404)
-            done()
-          })
-    })
-
-    it('Should not add shared lists', (done) => {
-        chai.request(server)
-          .get('/api/shareList/' + 12345) // remove a random entry (does not exist as on test DB)
-          .end(function (err, res) {
-              console.log(res.body)
-            res.status.should.equal(404)
-            done()
-          })
-    })
-
-})
-
-
-
-
-describe('Deletion of Shopping List and Items', () => {
+describe('Multiple Post tests that require the same structure', () => {
     let creatorID = '117557445192175959912'
     let listItem = {
         listName: 'Testing List',
@@ -228,209 +173,118 @@ describe('Deletion of Shopping List and Items', () => {
                 'name': 'testItem1',
                 'quantity': 1,
                 'shop': 'Woolworths',
-                'category': 'other'
+                'category': 'other',
+                'done' : false
             },
             {
                 'name': 'testItem2',
                 'quantity': 2,
                 'shop': 'Woolworths',
-                'category': 'toy'
+                'category': 'toy',
+                'done': false
             }],
         creator: creatorID
     }
+    it('Should add a new shopping list, with correct parameters and delete', (done) => {
+        chai.request(server)
+        .post('/api/add/' + creatorID)
+        .send(listItem)
+        .end((err, res) => {
+            res.should.have.status(200)
+            listID = res.body._id
+            chai.request(server)
+            .post('/api/markdone/')
+            .end(function (err, res) {
+                res.should.have.status(500)
+            })
+        done()
+        })
+    })
 
-    let updated = {
-        listName: 'Testing List',
-        editable: true,
-        visible: false,
-        items: [
-            {
-                'name': 'updateItemName',
-                'quantity': 1,
-                'shop': 'Woolworths',
-                'category': 'other'
-            },
-            {
-                'name': 'testItem2',
-                'quantity': 2,
-                'shop': 'Woolworths',
-                'category': 'toy'
-            }],
-        creator: creatorID
-    }
+    it('Should add a new shopping list, with correct parameters and delete', (done) => {
+        chai.request(server)
+        .post('/api/add/' + creatorID)
+        .send(listItem)
+        .end((err, res) => {
+            res.should.have.status(200)
+            listID = res.body._id
+            chai.request(server)
+            .post('/api/copyList/')
+            .end(function (err, res) {
+                res.should.have.status(500)
+            })
+        done()
+        })
+    })
+
+    it('Should copylist', (done) => {
+        chai.request(server)
+        .post('/api/add/' + creatorID)
+        .send(listItem)
+        .end((err, res) => {
+            res.should.have.status(200)
+            list_ID = res.body._id
+            item_ID = res.body.items[0]._id
+            done_toggle = true
+            let mark_toggle = {
+                listID: list_ID,
+                itemID: item_ID,
+                done: false,
+            }
+            chai.request(server)
+            .post('/api/copyList/')
+            .send(mark_toggle)
+            .end(function (err, res) {
+                res.should.have.status(200)
+            })
+        done()
+        })
+    })
+
+    it('Should copyList', (done) => {
+        chai.request(server)
+        .post('/api/add/' + creatorID)
+        .send(listItem)
+        .end((err, res) => {
+            res.should.have.status(200)
+            list_ID = res.body._id
+            user_ID = res.body.creator
+            done_toggle = true
+            let copy = {
+                listID: list_ID,
+                userID: user_ID,
+            }
+            chai.request(server)
+            .post('/api/copyList/')
+            .send(copy)
+            .end(function (err, res) {
+                res.should.have.status(200)
+            })
+        done()
+        })
+    })
 })
 
 
+describe('UserLists', () => {
+    it('Should not add user ', (done) => {
+        chai.request(server)
+          .get('/api/usersLists/' + 123) 
+          .end(function (err, res) {
+            res.status.should.equal(200)
+            done()
+          })
+    })
+    
+})
 
-
-// describe('Retrieve User to the DB', () => {
-//     userID = String(parseInt(Math.random() *10000))
-//     let newUser = {
-//         googleId:  userID,
-//         googleName: 'Mo Salah',
-//         googleEmail: 'balondor@gmail.com',
-//         googlePhoto: 'www.goldenbootPhoto.com'
-//     }
-
-//     it('Should add a new user , with correct parameters', (done) => {
-//         chai.request(server)
-//             .post('/api/addUser')
-//             .send(newUser)
-//             .end((err, res) => {
-//                 res.should.have.status(200)
-//                 res.body.googleId.should.equal(userID)
-//                 res.body.googleName.should.equal('Mo Salah')
-//                 res.body.googleEmail.should.equal('balondor@gmail.com')
-//                 res.body.googlePhoto.should.equal('www.goldenbootPhoto.com')
-//                 done()
-//             })
-//     })
-//     // it('Should not add user', (done) => {
-//     //     chai.request(server)
-//     //       .get('/api/addUser') // remove a random entry (does not exist as on test DB)
-//     //       .end(function (err, res) {
-//     //         res.status.should.equal(404)
-//     //         done()
-//     //       })
-//     // })
-
-
-//     // it('Should not retreive user list', (done) => {
-//     //     chai.request(server)
-//     //         .get('/api/usersLists/' + 123) // remove a random entry (does not exist as on test DB)
-//     //         .end(function (err, res) {
-            
-//     //         res.status.should.equal(500)
-//     //         done()
-//     //     })
-//     // })
-
-
-   
-// })
-
-
-
-
-// // describe('Adding new Shopping List', () => {
-// //   let listItem = {
-// //     listName: 'Testing List',
-// //     editable: true,
-// //     visible: false,
-// //     items: [
-// //       { 'name': 'testItem1',
-// //         'quantity': 1,
-// //         'shop': 'Woolworths',
-// //         'category': 'other'}, 
-// //       { 'name': 'testItem2',
-// //         'quantity': 2,
-// //         'shop': 'Woolworths',
-// //         'category': 'toy'
-// //         }],
-// //     creator: 'CreatorTest'
-// //   }
-
-// //     it('Should not delete the invalid item', (done) => {
-// //     chai.request(server)
-// //       .get('/api/delete/12345') // remove a random entry (does not exist as on test DB)
-// //       .end(function (err, res) {
-// //         res.status.should.equal(500)
-// //         done()
-// //       })
-
-// //   it('Should add a new shopping list, with correct parameters', (done) => {
-// //     chai.request(server)
-// //       .post('/api/add')
-// //       .send(listItem)
-// //       .end((err, res) => {
-// //         res.should.have.status(200)
-// //         done()
-// //       })
-// //   })
-// // })
-
-
-// //  // 200 status code indicates success, whereas a 400 status codes indicates an error
-// //  describe('Deleting items', () => {
-// //   it('Should not delete the invalid item', (done) => {
-// //     chai.request(server)
-// //       .get('/api/delete/12345') // remove a random entry (does not exist as on test DB)
-// //       .end(function (err, res) {
-// //         res.status.should.equal(500)
-// //         done()
-// //       })
-// //   })
-
-// //   it('Should delete an item from the shopping list', (done) => {
-// //     let listItem = {
-// //       item: 'Crunchie',
-// //       creator: 'Slav',
-// //       quantity: 1
-// //     }
-// //     chai.request(server)
-// //       .post('/api/add')
-// //       .send(listItem)
-// //       .end((err, res) => {
-// //         res.should.have.status(200)
-// //         itemID = res.body._id
-
-// //         chai.request(server)
-// //           .get('/api/delete/' + itemID)
-// //           .end(function (err, res) {
-// //             expect(res).to.have.status(200)
-// //             done()
-// //           })
-// //         done()
-// //       })
-// //   })
-// // })
-
-// // describe('Retrieving items', () => {
-// //   it('Should list all items from the shopping list', (done) => {
-// //     chai.request(server)
-// //       .get('/api/all')
-// //       .end(function (err, res) {
-// //         expect(res).to.have.status(200)
-// //         done()
-// //       })
-// //     done()
-// //   })
-// // })
-
-// // describe('Update items', () => {
-// //   it('Should be able to edit an existing item by its id', (done) => {
-// //     let listItem = {
-// //       item: 'Mentos',
-// //       creator: 'Mickey',
-// //       quantity: 5
-// //     }
-// //     let updatedListItem = {
-// //       item: 'Airwaves',
-// //       creator: 'Donald',
-// //       quantity: 10
-// //     }
-// //     chai.request(server)
-// //       .post('/api/add')
-// //       .send(listItem)
-// //       .end((err, res) => {
-//         res.should.have.status(200)
-//         itemID = res.body._id
-
-//         chai.request(server)
-//           .post('/api/update/' + itemID)
-//           .send(updatedListItem)
-//           .end(function (err, res) {
-//             expect(res).to.have.status(200)
-//             res.body.should.be.a('object')
-//             res.body.should.have.property('item')
-//             res.body.should.have.property('creator')
-//             res.body.should.have.property('quantity')
-//             res.body.item.should.equal('Airwaves')
-//             res.body.creator.should.equal('Donald')
-//             res.body.quantity.should.equal('10')
-//             done()
-//           })
-//       })
-//     done()
-//   })
-// })
+describe('Share Lists', () => {
+    it('Should not add shared lists', (done) => {
+        chai.request(server)
+          .get('/api/shareList/' + 12345) 
+          .end(function (err, res) {
+            res.status.should.equal(404)
+            done()
+          })
+    })
+})

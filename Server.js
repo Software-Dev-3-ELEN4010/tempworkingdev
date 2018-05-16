@@ -51,7 +51,7 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next()
 })
-// Server index.html page when request to the root is made
+// Server index.html page when request to the root is made is not call
 app.get('/', function (req, res, next) {
   res.sendfile('./public/index.html')
 })

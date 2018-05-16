@@ -11856,7 +11856,6 @@ module.exports = defaults;
         }
         console.log(this.$session.get('profileId'));
         setTimeout(() => {
-            console.log("times over");
             this.setLoginState();
         }, 2000);
         this.userPhoto = this.$session.get('profilePhoto');
@@ -12237,12 +12236,7 @@ function applyToTag (styleElement, obj) {
                 googleEmail: profile.getEmail(),
                 googlePhoto: profile.getImageUrl()
             };
-            console.log(profile.getId());
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addUser', param).then(response => {
-                console.log("user added to db");
-            }).catch(error => {
-                console.log(error);
-            });
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addUser', param).then(response => {}).catch(error => {});
             location.reload();
             this.$notify({
                 group: 'foo',
@@ -12252,7 +12246,6 @@ function applyToTag (styleElement, obj) {
         },
         onSignInError(error) {
             // `error` contains any error occurred.
-            console.log('Login failed', error);
         }
     }
 });
@@ -12707,7 +12700,6 @@ module.exports = Cancel;
         },
 
         saveShoppingList(event) {
-            console.log(this.$session.get('profileName'));
             if (this.shoppingListName != '') {
                 if (event) event.preventDefault();
                 let param = {
@@ -12721,13 +12713,9 @@ module.exports = Cancel;
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/add/' + this.$session.get('profileId'), param).then(response => {
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/shareList/' + response.data._id, { sharingList: this.sharingList }).then(response2 => {
                         this.typing = false;
-                    }).catch(error => {
-                        console.log(error);
-                    });
+                    }).catch(error => {});
                     this.typing = false;
-                }).catch(error => {
-                    console.log(error);
-                });
+                }).catch(error => {});
             }
             this.$notify({
                 group: 'foo',
@@ -12869,103 +12857,6 @@ module.exports = Cancel;
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12986,9 +12877,7 @@ module.exports = Cancel;
                 userId: this.$session.get('profileId')
             }).then(response => {
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
         },
         share() {
             this.sharing = true;
@@ -12996,7 +12885,6 @@ module.exports = Cancel;
         fetchshoppingList() {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/all').then(response => {
                 this.shoppingLists = response.data;
-                console.log(this.shoppingLists);
             });
         },
         deleteShoppingList(id) {
@@ -13005,8 +12893,6 @@ module.exports = Cancel;
         },
         deleteItem(listId, itemId) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/deleteItem/' + listId + itemId);
-            console.log(listId);
-            console.log(listId.length);
             this.fetchshoppingList();
         },
         addItemToShoppingList(listId) {
@@ -13018,13 +12904,9 @@ module.exports = Cancel;
                     category: this.selectedCategoryList
                 }
             };
-            console.log(param);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addItem/' + listId, param).then(response => {
-                console.log("added to db");
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
         },
         addToShareList(event) {
             if (this.email != '') {
@@ -13035,9 +12917,7 @@ module.exports = Cancel;
         send(listid) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/shareList/' + listid, { sharingList: this.sharingList }).then(response => {
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
         }
     }
 });
@@ -13172,23 +13052,15 @@ module.exports = Cancel;
     },
     methods: {
         checkItem(itemId, listId, done) {
-            console.log(itemId);
-            console.log(listId);
-            console.log(done);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/markDone/', { listId: listId, itemId: itemId, done: !done }).then(response => {
-                console.log("added to db");
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
         },
         share() {
             this.sharing = true;
         },
         fetchShoppingLists() {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/usersLists/' + this.$session.get('profileId')).then(response => {
-                //                    this.shoppingLists = response.data;
-                console.log(response.data);
                 this.shoppingLists = response.data;
             });
             this.$notify({
@@ -13209,8 +13081,6 @@ module.exports = Cancel;
         },
         deleteItem(listId, itemId) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/deleteItem/' + listId + itemId);
-            console.log(listId);
-            console.log(listId.length);
             this.fetchshoppingList();
             this.$notify({
                 group: 'foo',
@@ -13229,11 +13099,8 @@ module.exports = Cancel;
                 }
             };
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addItem/' + listId, param).then(response => {
-                console.log("added to db");
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
             this.$notify({
                 group: 'foo',
                 title: 'Item Added',
@@ -13255,9 +13122,7 @@ module.exports = Cancel;
         send(listid) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/shareList/' + listid, { sharingList: this.sharingList }).then(response => {
                 this.typing = false;
-            }).catch(error => {
-                console.log(error);
-            });
+            }).catch(error => {});
 
             this.$notify({
                 group: 'foo',
@@ -17712,7 +17577,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* The switch - the box around the slider */\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 34px;\n}\n\n/* Hide default HTML checkbox */\n.switch input {\n    display: none;\n}\n\n/* The slider */\n.slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n.slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\ninput:checked + .slider {\n    background-color: #2196F3;\n}\ninput:focus + .slider {\n    box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.slider.round {\n    border-radius: 34px;\n}\n.slider.round:before {\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* The switch - the box around the slider */\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 34px;\n}\n\n/* Hide default HTML checkbox */\n.switch input {\n    display: none;\n}\n\n/* The slider */\n.slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n.slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\ninput:checked + .slider {\n    background-color: #2196F3;\n}\ninput:focus + .slider {\n    box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.slider.round {\n    border-radius: 34px;\n}\n.slider.round:before {\n    border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -18366,9 +18231,7 @@ var render = function() {
                 _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
                   _c("strong", [_vm._v("List Creator")]),
                   _vm._v(
-                    " " +
-                      _vm._s(shoppingList.creator) +
-                      "\n                    "
+                    " " + _vm._s(shoppingList.creator) + "\n                "
                   )
                 ]),
                 _vm._v(" "),
@@ -18611,7 +18474,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-secondary",
+                    staticClass: "btn btn-success",
                     on: {
                       click: function($event) {
                         _vm.addItemToShoppingList(shoppingList._id)
