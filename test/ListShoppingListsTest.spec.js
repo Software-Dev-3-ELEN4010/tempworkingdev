@@ -1,4 +1,4 @@
-// import Vue from 'vue'
+// var Vue = require('vue')
 // import ListShoppingLists from '../public/src/components/ListShoppingLists.vue'
 
 // describe('ListShoppingLists.vue', () => {
