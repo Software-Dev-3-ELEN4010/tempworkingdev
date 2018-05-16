@@ -1,6 +1,7 @@
 import Vue from 'vue'
+import Home from '../components/Home.vue'
 import Router from 'vue-router'
-import tempPage from '../components/Login.vue'
+// import Login from '../components/Login.vue'
 import CreateList from '../components/CreateList.vue'
 import ListShoppingLists from '../components/ListShoppingLists.vue'
 
@@ -11,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'TempPage',
-      component: tempPage
+      component: Home
     },
     {
       path: '/createList',

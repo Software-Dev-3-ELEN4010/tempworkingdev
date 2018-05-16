@@ -4,9 +4,34 @@ var express = require('express')
 var shoppingListRoutes = express.Router()
 var ShoppingList = require('./ShoppingList')
 
-shoppingListRoutes.route('/').get(function (req,res) {
+// var userRoutes = express.Router()
+var User = require('./User')
 
-  res.sendfile(__dirname)
+shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
+  User.find({googleEmail: req.body.googleEmail}, function (err, res) {
+    if (res.length) {
+      console.log('user is already added')
+    } else {
+      User.create(
+        {
+          googleId: req.body.googleId,
+          googleName: req.body.googleName,
+          googleEmail: req.body.googleEmail,
+          googlePhoto: req.body.googlePhoto,
+          userShoppingLists: []
+        },
+        function (error, shoppingList) {
+          if (error) {
+            callres.status(400).send('Unable to new user shopping list')
+          }
+          callres.status(200).json(shoppingList)
+        }
+      )
+    }
+    if (err) {
+      return next(new Error(err))
+    }
+  })
 })
 
 // Retrieve all items from the shopping

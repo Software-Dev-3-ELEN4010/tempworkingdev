@@ -75,7 +75,6 @@
       saveShoppingList(event) {
         if (this.shoppingListName != '') {
           if (event) event.preventDefault();
-          let url = 'http://localhost:3000/api/add';
           let param = {
             listName: this.shoppingListName,
             editable: this.editableCheckbox,
