@@ -77,6 +77,35 @@ describe('Deletion of Shopping List and Items', () => {
             }],
         creator: creatorID
     }
+
+
+    it('Should not delete the invalid list', (done) => {
+    chai.request(server)
+      .get('/api/delete/12345') // remove a random entry (does not exist as on test DB)
+      .end(function (err, res) {
+        res.status.should.equal(500)
+        done()
+      })
+    })
+
+    it('Should not delete the invalid item', (done) => {
+        chai.request(server)
+            .get('/api/deleteItem/12345') // remove a random entry (does not exist as on test DB)
+            .end(function (err, res) {
+            res.status.should.equal(500)
+            done()
+        })
+    })
+
+    it('Should not update the invalid item', (done) => {
+        chai.request(server)
+            .get('/api/addItem/12345') // remove a random entry (does not exist as on test DB)
+            .end(function (err, res) {
+            res.status.should.equal(404)
+            done()
+        })
+    })
+
     it('Should add a new shopping list, with correct parameters and delete', (done) => {
         chai.request(server)
         .post('/api/add/' + creatorID)
@@ -93,23 +122,110 @@ describe('Deletion of Shopping List and Items', () => {
         })
     })
 
-    it('Should add a new shopping list, and delete item', (done) => {
-        chai.request(server)
-        .post('/api/add/' + creatorID)
-        .send(listItem)
-        .end((err, res) => {
-            res.should.have.status(200)
-            itemID = res.body.items[0]._id
-            chai.request(server)
-            .get('/deleteItem/' + itemID)
-            .end(function (err, res) {
-                res.should.have.status(200)
-            })
-        done()
-        })
-    })
+    // it('Should add a new shopping list, and delete item', (done) => {
+    //     chai.request(server)
+    //     .post('/api/add/' + creatorID)
+    //     .send(listItem)
+    //     .end((err, res) => {
+    //         res.should.have.status(200)
+    //         itemID = res.body.items[0]._id
+    //         chai.request(server)
+    //         .get('/deleteItem/' + itemID)
+    //         .end(function (err, res) {
+    //             res.should.have.status(200)
+    //         })
+    //     done()
+    //     })
+    // })
 
 })
+
+
+
+
+describe('Adding new User to the DB', () => {
+    userID = '' + Math.random()*10000000
+    let newUser = {
+        googleId:  userID,
+        googleName: 'Mo Salah',
+        googleEmail: 'balondor@gmail.com',
+        googlePhoto: 'www.goldenbootPhoto.com'
+    }
+
+    it('Should add a new user , with correct parameters', (done) => {
+        chai.request(server)
+            .post('/api/addUser')
+            .send(newUser)
+            .end((err, res) => {
+                res.should.have.status(200)
+                res.body.googleId.should.equal(userID)
+                res.body.googleName.should.equal('Mo Salah')
+                res.body.googleEmail.should.equal('balondor@gmail.com')
+                res.body.googlePhoto.should.equal('www.goldenbootPhoto.com')
+                done()
+            })
+    })
+    it('Should not ', (done) => {
+        chai.request(server)
+          .get('/api/addUser') // remove a random entry (does not exist as on test DB)
+          .end(function (err, res) {
+            res.status.should.equal(404)
+            done()
+          })
+    })
+})
+
+
+
+
+// describe('Retrieve User to the DB', () => {
+//     userID = String(parseInt(Math.random() *10000))
+//     let newUser = {
+//         googleId:  userID,
+//         googleName: 'Mo Salah',
+//         googleEmail: 'balondor@gmail.com',
+//         googlePhoto: 'www.goldenbootPhoto.com'
+//     }
+
+//     it('Should add a new user , with correct parameters', (done) => {
+//         chai.request(server)
+//             .post('/api/addUser')
+//             .send(newUser)
+//             .end((err, res) => {
+//                 res.should.have.status(200)
+//                 res.body.googleId.should.equal(userID)
+//                 res.body.googleName.should.equal('Mo Salah')
+//                 res.body.googleEmail.should.equal('balondor@gmail.com')
+//                 res.body.googlePhoto.should.equal('www.goldenbootPhoto.com')
+//                 done()
+//             })
+//     })
+//     // it('Should not add user', (done) => {
+//     //     chai.request(server)
+//     //       .get('/api/addUser') // remove a random entry (does not exist as on test DB)
+//     //       .end(function (err, res) {
+//     //         res.status.should.equal(404)
+//     //         done()
+//     //       })
+//     // })
+
+
+//     // it('Should not retreive user list', (done) => {
+//     //     chai.request(server)
+//     //         .get('/api/usersLists/' + 123) // remove a random entry (does not exist as on test DB)
+//     //         .end(function (err, res) {
+            
+//     //         res.status.should.equal(500)
+//     //         done()
+//     //     })
+//     // })
+
+
+   
+// })
+
+
+
 
 // // describe('Adding new Shopping List', () => {
 // //   let listItem = {
