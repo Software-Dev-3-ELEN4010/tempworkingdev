@@ -8,7 +8,6 @@
     "build": "webpack",
     "prepublish": "npm run build",
     "test": "standard && nyc mocha --timeout 10000 --exit",
-    "cover": "",
     "start": "node server"
   },
   "dependencies": {
@@ -67,6 +66,12 @@
       "*.bundle.js",
       "/test/*",
       "/public/src/font-awesome/"
+    ]
+  },
+  "nyc": {
+    "ignore": [
+      "/test/*",
+      "build"
     ]
   }
 }
