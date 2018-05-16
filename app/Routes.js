@@ -3,9 +3,31 @@
 var express = require('express')
 var shoppingListRoutes = express.Router()
 var ShoppingList = require('./ShoppingList')
-
-// var userRoutes = express.Router()
 var User = require('./User')
+
+
+shoppingListRoutes.route('/markDone').post(function (req,callres,next) {
+    var listId = req.body.listId
+    var itemId = req.body.itemId
+    var done = req.body.done
+    ShoppingList.update({_id:listId, "items._id":itemId},{$set: {"items.$.done":done}},function(err,model){
+        if(err){
+            console.log(err)
+        }
+    })
+})
+
+shoppingListRoutes.route('/copyList').post(function(req,callres,next){
+    var listId = req.body.listId
+    var userId = req.body.userId
+    console.log(listId)
+    console.log(userId)
+    User.update({googleId: userId}, {$push: {userShoppingLists: listId}}, function (err, model) {
+        if (err) {
+            console.log(err)
+        }
+    })
+})
 
 shoppingListRoutes.route('/addUser').post(function (req, callres, next) {
   User.find({googleId: req.body.googleId}, function (err, res) {

@@ -5,9 +5,9 @@
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Shopping list name" v-model="shoppingListName">
                 <input type="checkbox" id="editableCheckbox" v-model="editableCheckbox">
-                <label for="checkbox">Publically Editable</label>
+                <label for="checkbox">Editable</label>
                 <input type="checkbox" id="visibleCheckbox" v-model="visibleCheckbox">
-                <label for="checkbox">Publically Visible</label>
+                <label for="checkbox">Visible</label>
                 <hr>
 
                 <h3>Add new item to new shopping list</h3>
@@ -16,6 +16,8 @@
                     <input type="text" class="form-control" placeholder="Item name" v-model="name">
                     <input type="number" min="1" class="form-control" v-model="quantity">
                 </div>
+                <input type="checkbox" id="completeCheckbox" v-model="done">
+                <label for="checkbox">Complete</label>
                 <select v-model="shop">
                     <option disabled value="">Please select one</option>
                     <option>Woolworths</option>
@@ -44,7 +46,7 @@
                             <th>Category</th>
                         </tr>
                         <tr v-for="item in items">
-                            <td>T</td>
+                            <td>{{item.done}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.quantity}}</td>
                             <td>{{item.shop}}</td>
@@ -111,6 +113,7 @@
             },
 
             saveShoppingList(event) {
+                console.log(this.$session.get('profileName'))
                 if (this.shoppingListName != '') {
                     if (event) event.preventDefault();
                     let param = {
@@ -118,7 +121,7 @@
                         editable: this.editableCheckbox,
                         visible: this.visibleCheckbox,
                         items: this.items,
-                        creator: this.$session.get('profileId'),
+                        creator: this.$session.get('profileName'),
                         quantity: 0
                     };
                     axios.post('/api/add/' + this.$session.get('profileId'), param).then((response) => {
@@ -134,7 +137,12 @@
                 }
             },
             addItemToList(event) {
-                this.items.push({name: this.name, quantity: this.quantity, shop: this.shop, category: this.category})
+                this.items.push({name: this.name, quantity: this.quantity, shop: this.shop, category: this.category, done:this.done})
+                this.name = ''
+                this.quantity = 0
+                this.shop = ''
+                this.category = ''
+                this.done = false
             },
             addToShareList(event) {
                 if (this.email != '') {

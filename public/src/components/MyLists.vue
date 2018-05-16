@@ -18,7 +18,9 @@
                         <th></th>
                     </tr>
                     <tr v-for="item in shoppingList.items">
-                        <td>T</td>
+                        <td>
+                            <input type="checkbox" id="completeCheckbox" v-model="item.done" v-on:click="checkItem(item._id, shoppingList._id,item.done)">
+                        </td>
                         <td>{{item.name}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.shop}}</td>
@@ -85,8 +87,9 @@
                 <button v-on:click="send(shoppingList._id)">Send Invites</button>
             </div>
 
-
             <button v-on:click="deleteShoppingList(shoppingList._id)">Delete List</button>
+
+
             <hr>
         </div>
     </div>
@@ -106,6 +109,19 @@
             this.fetchShoppingLists();
         },
         methods: {
+            checkItem(itemId,listId,done){
+                console.log(itemId)
+                console.log(listId)
+                console.log(done)
+                axios.post('/api/markDone/', {listId:listId,itemId:itemId,done:!done}).then((response) => {
+                    console.log("added to db");
+                    this.typing = false;
+                }).catch((error) => {
+                    console.log(error);
+                })
+
+
+            },
             share(){
                 this.sharing = true
             },

@@ -84,6 +84,8 @@
                         <button v-on:click="send(shoppingList._id)">Send Invites</button>
                     </div>
 
+                    <button v-on:click="copy(shoppingList._id)">Copy List to my profile</button>
+
                     <button v-on:click="deleteShoppingList(shoppingList._id)">Delete List</button>
                     <hr>
 
@@ -107,6 +109,13 @@
             this.fetchshoppingList();
         },
         methods: {
+            copy(listId){
+                axios.post('/api/copyList/', {listId: listId, userId: this.$session.get('profileId')}).then((response) => {
+                    this.typing = false;
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
             share(){
                 this.sharing = true
             },

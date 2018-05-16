@@ -1,33 +1,34 @@
 var mongoose = require('mongoose')
 
 var shoppingList = new mongoose.Schema({
-  listName: {
-    type: String
-  },
+        listName: {
+            type: String
+        },
 
-  editable: {
-    type: Boolean
-  },
+        editable: {
+            type: Boolean
+        },
 
-  visible: {
-    type: Boolean
-  },
+        visible: {
+            type: Boolean
+        },
 
-  items: [
+        items: [
+            {
+                name: {type: String},
+                quantity: {type: Number},
+                shop: {type: String},
+                category: {type: String},
+                done: {type: Boolean}
+            }
+        ],
+
+        creator: {
+            type: String
+        }
+    },
     {
-      name: {type: String},
-      quantity: {type: Number},
-      shop: {type: String},
-      category: {type: String}
+        collection: 'shoppingLists'
     }
-  ],
-
-  creator: {
-    type: String
-  }
-},
-{
-  collection: 'shoppingLists'
-}
 )
 module.exports = mongoose.model('ShoppingList', shoppingList)

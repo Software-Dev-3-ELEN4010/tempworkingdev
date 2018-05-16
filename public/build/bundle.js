@@ -12223,6 +12223,7 @@ Vue.compile = compileToFunctions;
             console.log(profile.getEmail());
             this.$session.set('profileId', profile.getId());
             this.$session.set('profilePhoto', profile.getImageUrl());
+            this.$session.set('profileName', profile.getName());
             let param = {
                 googleId: profile.getId(),
                 googleName: profile.getName(),
@@ -12612,6 +12613,8 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
 
 
 
@@ -12633,6 +12636,7 @@ module.exports = Cancel;
         },
 
         saveShoppingList(event) {
+            console.log(this.$session.get('profileName'));
             if (this.shoppingListName != '') {
                 if (event) event.preventDefault();
                 let param = {
@@ -12640,7 +12644,7 @@ module.exports = Cancel;
                     editable: this.editableCheckbox,
                     visible: this.visibleCheckbox,
                     items: this.items,
-                    creator: this.$session.get('profileId'),
+                    creator: this.$session.get('profileName'),
                     quantity: 0
                 };
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/add/' + this.$session.get('profileId'), param).then(response => {
@@ -12656,7 +12660,12 @@ module.exports = Cancel;
             }
         },
         addItemToList(event) {
-            this.items.push({ name: this.name, quantity: this.quantity, shop: this.shop, category: this.category });
+            this.items.push({ name: this.name, quantity: this.quantity, shop: this.shop, category: this.category, done: this.done });
+            this.name = '';
+            this.quantity = 0;
+            this.shop = '';
+            this.category = '';
+            this.done = false;
         },
         addToShareList(event) {
             if (this.email != '') {
@@ -12769,6 +12778,8 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12783,6 +12794,13 @@ module.exports = Cancel;
         this.fetchshoppingList();
     },
     methods: {
+        copy(listId) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/copyList/', { listId: listId, userId: this.$session.get('profileId') }).then(response => {
+                this.typing = false;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
         share() {
             this.sharing = true;
         },
@@ -12933,6 +12951,9 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12947,6 +12968,17 @@ module.exports = Cancel;
         this.fetchShoppingLists();
     },
     methods: {
+        checkItem(itemId, listId, done) {
+            console.log(itemId);
+            console.log(listId);
+            console.log(done);
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/markDone/', { listId: listId, itemId: itemId, done: !done }).then(response => {
+                console.log("added to db");
+                this.typing = false;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
         share() {
             this.sharing = true;
         },
@@ -13006,11 +13038,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_App_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_signin_button__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_signin_button__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_google_signin_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_google_signin_button__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_session__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_session__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_session___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_session__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_js_modal__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_js_modal__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_js_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_js_modal__);
 
 
@@ -13023,6 +13055,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_4_vue_session___default.a, { persist: true });
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_3_vue_google_signin_button___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].config.productionTip = false;
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].config.devtools = false;
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].config.debug = false;
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].config.silent = true;
 
 /* eslint-disable no-new */
 new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
@@ -14608,7 +14643,7 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_CreateList_vue__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ListShoppingLists_vue__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_MyLists_vue__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_MyLists_vue__ = __webpack_require__(64);
 
 
 
@@ -17521,9 +17556,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox" } }, [
-            _vm._v("Publically Editable")
-          ]),
+          _c("label", { attrs: { for: "checkbox" } }, [_vm._v("Editable")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -17563,9 +17596,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox" } }, [
-            _vm._v("Publically Visible")
-          ]),
+          _c("label", { attrs: { for: "checkbox" } }, [_vm._v("Visible")]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -17616,6 +17647,44 @@ var render = function() {
               }
             })
           ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.done,
+                expression: "done"
+              }
+            ],
+            attrs: { type: "checkbox", id: "completeCheckbox" },
+            domProps: {
+              checked: Array.isArray(_vm.done)
+                ? _vm._i(_vm.done, null) > -1
+                : _vm.done
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.done,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.done = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.done = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.done = $$c
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "checkbox" } }, [_vm._v("Complete")]),
           _vm._v(" "),
           _c(
             "select",
@@ -17724,7 +17793,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm._l(_vm.items, function(item) {
                       return _c("tr", [
-                        _c("td", [_vm._v("T")]),
+                        _c("td", [_vm._v(_vm._s(item.done))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(item.name))]),
                         _vm._v(" "),
@@ -17880,8 +17949,12 @@ if (false) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ListShoppingLists_vue__ = __webpack_require__(18);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8e7f9e6e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ListShoppingLists_vue__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8e7f9e6e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ListShoppingLists_vue__ = __webpack_require__(63);
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(61)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 
@@ -17891,7 +17964,7 @@ var normalizeComponent = __webpack_require__(1)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -17927,6 +18000,46 @@ if (false) {(function () {
 
 /***/ }),
 /* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(62);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("61d66fed", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e7f9e6e\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ListShoppingLists.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8e7f9e6e\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ListShoppingLists.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntable {\n    font-family: arial, sans-serif;\n    border-collapse: collapse;\n}\ntd, th {\n    border: 1px solid #dddddd;\n    text-align: left;\n    padding: 8px;\n}\ntr:nth-child(even) {\n    background-color: #dddddd;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18266,6 +18379,18 @@ var render = function() {
                   {
                     on: {
                       click: function($event) {
+                        _vm.copy(shoppingList._id)
+                      }
+                    }
+                  },
+                  [_vm._v("Copy List to my profile")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
                         _vm.deleteShoppingList(shoppingList._id)
                       }
                     }
@@ -18321,17 +18446,17 @@ if (false) {
 }
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_MyLists_vue__ = __webpack_require__(19);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_a555f6fa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_MyLists_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_a555f6fa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_MyLists_vue__ = __webpack_require__(67);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(63)
+  __webpack_require__(65)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -18377,13 +18502,13 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -18403,7 +18528,7 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -18417,7 +18542,7 @@ exports.push([module.i, "\ntable {\n    font-family: arial, sans-serif;\n    bor
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18455,7 +18580,64 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(shoppingList.items, function(item) {
                         return _c("tr", [
-                          _c("td", [_vm._v("T")]),
+                          _c("td", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.done,
+                                  expression: "item.done"
+                                }
+                              ],
+                              attrs: {
+                                type: "checkbox",
+                                id: "completeCheckbox"
+                              },
+                              domProps: {
+                                checked: Array.isArray(item.done)
+                                  ? _vm._i(item.done, null) > -1
+                                  : item.done
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.checkItem(
+                                    item._id,
+                                    shoppingList._id,
+                                    item.done
+                                  )
+                                },
+                                change: function($event) {
+                                  var $$a = item.done,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = null,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          item,
+                                          "done",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          item,
+                                          "done",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(item, "done", $$c)
+                                  }
+                                }
+                              }
+                            })
+                          ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(item.name))]),
                           _vm._v(" "),
@@ -18805,7 +18987,7 @@ if (false) {
 }
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18814,7 +18996,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof='fun
 
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports) {
 
 var STORAGE = null;
@@ -18927,7 +19109,7 @@ module.exports = VueSession;
 
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(root, factory) {

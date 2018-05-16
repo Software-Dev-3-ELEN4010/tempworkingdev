@@ -34,6 +34,7 @@
                 console.log(profile.getEmail())
                 this.$session.set('profileId',profile.getId())
                 this.$session.set('profilePhoto',profile.getImageUrl())
+                this.$session.set('profileName',profile.getName())
                 let param = {
                     googleId: profile.getId(),
                     googleName: profile.getName(),
