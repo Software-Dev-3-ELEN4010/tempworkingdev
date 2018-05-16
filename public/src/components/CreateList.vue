@@ -52,8 +52,10 @@
                         </tr>
                     </table>
                 </div>
-
-                <button v-on:click="share()">Share</button>
+                <!--sharing-->
+                <div v-if="!sharing">
+                    <button v-on:click="share()">Share</button>
+                </div>
                 <div v-if="sharing">
                     <div class="row">
                         <h3>select members to share with</h3>
@@ -76,8 +78,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <button v-on:click="saveShoppingList($event)">Save</button>
 
