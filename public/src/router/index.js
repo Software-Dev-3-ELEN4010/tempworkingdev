@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import tempPage from '../components/tempPage.vue'
+import tempPage from '../components/Login.vue'
 import CreateList from '../components/CreateList.vue'
 import ListShoppingLists from '../components/ListShoppingLists.vue'
 
