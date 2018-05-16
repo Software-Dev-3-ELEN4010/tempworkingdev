@@ -1,6 +1,6 @@
 {
   "name": "Dont-Forget-The-Oreos",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple shopping list application",
   "main": "server.js",
   "author": "Christopher Maree, Kavilan Nair, Daniel Edwards, Iordan Tchaparov",

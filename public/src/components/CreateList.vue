@@ -4,11 +4,35 @@
         <form @submit.prevent>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Shopping list name" v-model="shoppingListName">
-                <input type="checkbox" id="editableCheckbox" v-model="editableCheckbox">
-                <label for="checkbox">Editable</label>
-                <input type="checkbox" id="visibleCheckbox" v-model="visibleCheckbox">
-                <label for="checkbox">Visible</label>
+
+
+                <div class="row">
+                    <div class="col-8">
+                        <label for="listName">List Name</label>
+                        <input type="text" id="listName" class="form-control" placeholder="Shopping list name" v-model="shoppingListName">
+                    </div>
+                    <div class="col-2">
+                        <label for="switch">Editable</label>
+                        <br>
+                        <label id="editableCheckbox" class="switch">
+                            <input type="checkbox" id="editableCheckbox" v-model="editableCheckbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="col-2">
+                        <label for="switch">Visable</label>
+                        <br>
+                        <label id="visibleCheckbox" class="switch">
+                            <input type="checkbox" id="visibleCheckbox" v-model="visibleCheckbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <!--<input type="text" class="form-control" placeholder="Shopping list name" v-model="shoppingListName">-->
+                <!--<input type="checkbox" id="editableCheckbox" v-model="editableCheckbox">-->
+                <!--<label for="checkbox">Editable</label>-->
+                <!--<input type="checkbox" id="visibleCheckbox" v-model="visibleCheckbox">-->
+                <!--<label for="checkbox">Visible</label>-->
                 <hr>
 
                 <h3>Add new item to new shopping list</h3>
@@ -148,7 +172,6 @@
             },
 
             saveShoppingList(event) {
-                console.log(this.$session.get('profileName'))
                 if (this.shoppingListName != '') {
                     if (event) event.preventDefault();
                     let param = {
@@ -163,11 +186,9 @@
                         axios.post('/api/shareList/' + response.data._id, {sharingList: this.sharingList}).then((response2) => {
                             this.typing = false;
                         }).catch((error) => {
-                            console.log(error);
                         })
                         this.typing = false;
                     }).catch((error) => {
-                        console.log(error);
                     })
                 }
                 this.$notify({

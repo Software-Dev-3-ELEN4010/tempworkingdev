@@ -51,7 +51,6 @@
             }
             console.log(this.$session.get('profileId'))
             setTimeout(() => {
-                console.log("times over");
                 this.setLoginState()
             }, 2000);
             this.userPhoto = this.$session.get('profilePhoto')

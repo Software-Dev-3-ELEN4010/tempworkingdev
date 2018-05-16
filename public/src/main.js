@@ -15,7 +15,6 @@ Vue.config.devtools = false
 Vue.config.debug = false
 Vue.config.silent = true
 
-
 /* eslint-disable no-new */
 new Vue({
   el: 'app',

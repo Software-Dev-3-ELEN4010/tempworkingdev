@@ -12662,6 +12662,30 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12838,6 +12862,110 @@ module.exports = Cancel;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -12853,7 +12981,10 @@ module.exports = Cancel;
     },
     methods: {
         copy(listId) {
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/copyList/', { listId: listId, userId: this.$session.get('profileId') }).then(response => {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/copyList/', {
+                listId: listId,
+                userId: this.$session.get('profileId')
+            }).then(response => {
                 this.typing = false;
             }).catch(error => {
                 console.log(error);
@@ -12881,7 +13012,10 @@ module.exports = Cancel;
         addItemToShoppingList(listId) {
             let param = {
                 item: {
-                    name: this.listItemName, quantity: this.listItemQuantity, shop: this.selectedShopList, category: this.selectedCategoryList
+                    name: this.listItemName,
+                    quantity: this.listItemQuantity,
+                    shop: this.selectedShopList,
+                    category: this.selectedCategoryList
                 }
             };
             console.log(param);
@@ -12915,6 +13049,17 @@ module.exports = Cancel;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13046,42 +13191,78 @@ module.exports = Cancel;
                 console.log(response.data);
                 this.shoppingLists = response.data;
             });
+            this.$notify({
+                group: 'foo',
+                title: 'Shopping Lists Have been loaded',
+                text: 'Your profiles lists can be seen below'
+            });
         },
         deleteShoppingList(id) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/delete/' + id);
             this.fetchshoppingList();
+            this.$notify({
+                group: 'foo',
+                title: 'List Deleted',
+                text: 'The shopping list has been removed'
+            });
+            location.reload();
         },
         deleteItem(listId, itemId) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/deleteItem/' + listId + itemId);
             console.log(listId);
             console.log(listId.length);
             this.fetchshoppingList();
+            this.$notify({
+                group: 'foo',
+                title: 'Item Removed',
+                text: 'removed from list'
+            });
+            location.reload();
         },
         addItemToShoppingList(listId) {
             let param = {
                 item: {
-                    name: this.listItemName, quantity: this.listItemQuantity, shop: this.selectedShopList, category: this.selectedCategoryList
+                    name: this.listItemName,
+                    quantity: this.listItemQuantity,
+                    shop: this.selectedShopList,
+                    category: this.selectedCategoryList
                 }
             };
-            console.log(param);
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/addItem/' + listId, param).then(response => {
                 console.log("added to db");
                 this.typing = false;
             }).catch(error => {
                 console.log(error);
             });
+            this.$notify({
+                group: 'foo',
+                title: 'Item Added',
+                text: 'Item Has been added to page'
+            });
+            location.reload();
         },
         addToShareList(event) {
             if (this.email != '') {
                 this.sharingList.push(this.email);
                 this.email = '';
             }
+            this.$notify({
+                group: 'foo',
+                title: 'Email Added',
+                text: 'New shared email link has been added'
+            });
         },
         send(listid) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/shareList/' + listid, { sharingList: this.sharingList }).then(response => {
                 this.typing = false;
             }).catch(error => {
                 console.log(error);
+            });
+
+            this.$notify({
+                group: 'foo',
+                title: 'Lists Shared',
+                text: 'You have shared lists!'
             });
         }
     }
@@ -17531,7 +17712,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* The switch - the box around the slider */\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 34px;\n}\n\n/* Hide default HTML checkbox */\n.switch input {\n    display: none;\n}\n\n/* The slider */\n.slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n.slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\ninput:checked + .slider {\n    background-color: #2196F3;\n}\ninput:focus + .slider {\n    box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.slider.round {\n    border-radius: 34px;\n}\n.slider.round:before {\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* The switch - the box around the slider */\n.switch {\n    position: relative;\n    display: inline-block;\n    width: 60px;\n    height: 34px;\n}\n\n/* Hide default HTML checkbox */\n.switch input {\n    display: none;\n}\n\n/* The slider */\n.slider {\n    position: absolute;\n    cursor: pointer;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: #ccc;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\n.slider:before {\n    position: absolute;\n    content: \"\";\n    height: 26px;\n    width: 26px;\n    left: 4px;\n    bottom: 4px;\n    background-color: white;\n    -webkit-transition: .4s;\n    transition: .4s;\n}\ninput:checked + .slider {\n    background-color: #2196F3;\n}\ninput:focus + .slider {\n    box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider:before {\n    -webkit-transform: translateX(26px);\n    -ms-transform: translateX(26px);\n    transform: translateX(26px);\n}\n\n/* Rounded sliders */\n.slider.round {\n    border-radius: 34px;\n}\n.slider.round:before {\n    border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -17559,107 +17740,144 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.shoppingListName,
-                expression: "shoppingListName"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Shopping list name" },
-            domProps: { value: _vm.shoppingListName },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.shoppingListName = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.editableCheckbox,
-                expression: "editableCheckbox"
-              }
-            ],
-            attrs: { type: "checkbox", id: "editableCheckbox" },
-            domProps: {
-              checked: Array.isArray(_vm.editableCheckbox)
-                ? _vm._i(_vm.editableCheckbox, null) > -1
-                : _vm.editableCheckbox
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.editableCheckbox,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.editableCheckbox = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.editableCheckbox = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-8" }, [
+              _c("label", { attrs: { for: "listName" } }, [
+                _vm._v("List Name")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.shoppingListName,
+                    expression: "shoppingListName"
                   }
-                } else {
-                  _vm.editableCheckbox = $$c
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox" } }, [_vm._v("Editable")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.visibleCheckbox,
-                expression: "visibleCheckbox"
-              }
-            ],
-            attrs: { type: "checkbox", id: "visibleCheckbox" },
-            domProps: {
-              checked: Array.isArray(_vm.visibleCheckbox)
-                ? _vm._i(_vm.visibleCheckbox, null) > -1
-                : _vm.visibleCheckbox
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.visibleCheckbox,
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = null,
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && (_vm.visibleCheckbox = $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      (_vm.visibleCheckbox = $$a
-                        .slice(0, $$i)
-                        .concat($$a.slice($$i + 1)))
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "listName",
+                  placeholder: "Shopping list name"
+                },
+                domProps: { value: _vm.shoppingListName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.shoppingListName = $event.target.value
                   }
-                } else {
-                  _vm.visibleCheckbox = $$c
                 }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "checkbox" } }, [_vm._v("Visible")]),
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c("label", { attrs: { for: "switch" } }, [_vm._v("Editable")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "switch", attrs: { id: "editableCheckbox" } },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editableCheckbox,
+                        expression: "editableCheckbox"
+                      }
+                    ],
+                    attrs: { type: "checkbox", id: "editableCheckbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.editableCheckbox)
+                        ? _vm._i(_vm.editableCheckbox, null) > -1
+                        : _vm.editableCheckbox
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.editableCheckbox,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              (_vm.editableCheckbox = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.editableCheckbox = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.editableCheckbox = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "slider round" })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c("label", { attrs: { for: "switch" } }, [_vm._v("Visable")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "switch", attrs: { id: "visibleCheckbox" } },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.visibleCheckbox,
+                        expression: "visibleCheckbox"
+                      }
+                    ],
+                    attrs: { type: "checkbox", id: "visibleCheckbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.visibleCheckbox)
+                        ? _vm._i(_vm.visibleCheckbox, null) > -1
+                        : _vm.visibleCheckbox
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.visibleCheckbox,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.visibleCheckbox = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.visibleCheckbox = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.visibleCheckbox = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "slider round" })
+                ]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -18118,96 +18336,147 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.shoppingLists.length > 0,
-            expression: "shoppingLists.length>0"
-          }
-        ],
-        staticClass: "col-md-12"
-      },
-      [
-        _c("h2", [_vm._v("All Public Shopping List")]),
-        _vm._v(" "),
-        _vm._l(_vm.shoppingLists, function(shoppingList) {
-          return _c("div", { staticClass: "row mrb-10" }, [
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.shoppingLists.length > 0,
+          expression: "shoppingLists.length>0"
+        }
+      ],
+      staticClass: "col-12"
+    },
+    [
+      _c("h2", [_vm._v("All Public Shopping List")]),
+      _vm._v(" "),
+      _vm._l(_vm.shoppingLists, function(shoppingList) {
+        return _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "card" }, [
             _c(
               "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: shoppingList.visible == true,
-                    expression: "shoppingList.visible==true"
-                  }
-                ]
-              },
+              { staticClass: "card-body" },
               [
-                _c("h4", [_vm._v(_vm._s(shoppingList.listName))]),
+                _c("h5", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(shoppingList.listName))
+                ]),
                 _vm._v(" "),
-                _c("strong", [_vm._v("List Creator")]),
-                _vm._v(
-                  " " + _vm._s(shoppingList.creator) + "\n                "
-                ),
-                _c("strong", [_vm._v("Public")]),
-                _vm._v(
-                  " " + _vm._s(shoppingList.visible) + "\n                "
-                ),
-                _c("strong", [_vm._v("Editable")]),
-                _vm._v(
-                  " " + _vm._s(shoppingList.editable) + "\n                "
-                ),
-                shoppingList.items.length != 0
-                  ? _c("div", [
-                      _c("h3", [_vm._v("Current Shopping List Items")]),
-                      _vm._v(" "),
-                      _c(
-                        "table",
-                        [
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _vm._l(shoppingList.items, function(item) {
-                            return _c("tr", [
-                              _c("td", [_vm._v("T")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(item.name))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(item.quantity))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(item.shop))]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(item.category))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "button",
-                                  {
+                _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
+                  _c("strong", [_vm._v("List Creator")]),
+                  _vm._v(
+                    " " +
+                      _vm._s(shoppingList.creator) +
+                      "\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-text" }, [
+                  shoppingList.items.length != 0
+                    ? _c("div", [
+                        _c("h3", [_vm._v("Current Shopping List Items")]),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "table" },
+                          [
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _vm._l(shoppingList.items, function(item) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.done,
+                                        expression: "item.done"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      id: "completeCheckbox"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(item.done)
+                                        ? _vm._i(item.done, null) > -1
+                                        : item.done
+                                    },
                                     on: {
                                       click: function($event) {
-                                        _vm.deleteItem(
+                                        _vm.checkItem(
+                                          item._id,
                                           shoppingList._id,
-                                          item._id
+                                          item.done
                                         )
+                                      },
+                                      change: function($event) {
+                                        var $$a = item.done,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = null,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              _vm.$set(
+                                                item,
+                                                "done",
+                                                $$a.concat([$$v])
+                                              )
+                                          } else {
+                                            $$i > -1 &&
+                                              _vm.$set(
+                                                item,
+                                                "done",
+                                                $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1))
+                                              )
+                                          }
+                                        } else {
+                                          _vm.$set(item, "done", $$c)
+                                        }
                                       }
                                     }
-                                  },
-                                  [_vm._v("X")]
-                                )
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.quantity))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.shop))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.category))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.deleteItem(
+                                            shoppingList._id,
+                                            item._id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("X")]
+                                  )
+                                ])
                               ])
-                            ])
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  : _vm._e(),
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    : _vm._e()
+                ]),
                 _vm._v(" "),
                 _c("p1", [_vm._v("Add items to new shopping list")]),
                 _vm._v(" "),
@@ -18342,13 +18611,14 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-secondary",
                     on: {
                       click: function($event) {
                         _vm.addItemToShoppingList(shoppingList._id)
                       }
                     }
                   },
-                  [_vm._v("Add item")]
+                  [_vm._v("+")]
                 ),
                 _vm._v(" "),
                 !_vm.sharing
@@ -18356,6 +18626,7 @@ var render = function() {
                       _c(
                         "button",
                         {
+                          staticClass: "btn btn-secondary",
                           on: {
                             click: function($event) {
                               _vm.share()
@@ -18398,6 +18669,7 @@ var render = function() {
                           _c(
                             "button",
                             {
+                              staticClass: "btn btn-secondary",
                               on: {
                                 click: function($event) {
                                   _vm.addToShareList($event)
@@ -18434,6 +18706,7 @@ var render = function() {
                       _c(
                         "button",
                         {
+                          staticClass: "btn btn-secondary",
                           on: {
                             click: function($event) {
                               _vm.send(shoppingList._id)
@@ -18448,6 +18721,7 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-secondary",
                     on: {
                       click: function($event) {
                         _vm.copy(shoppingList._id)
@@ -18460,6 +18734,7 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-danger",
                     on: {
                       click: function($event) {
                         _vm.deleteShoppingList(shoppingList._id)
@@ -18467,18 +18742,18 @@ var render = function() {
                     }
                   },
                   [_vm._v("Delete List")]
-                ),
-                _vm._v(" "),
-                _c("hr")
+                )
               ],
               1
             )
-          ])
-        })
-      ],
-      2
-    )
-  ])
+          ]),
+          _vm._v(" "),
+          _c("br")
+        ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -18579,399 +18854,420 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-md-12" },
+    { staticClass: "col-12" },
     [
       _c("h2", [_vm._v("View all your saved lists for your profile")]),
       _vm._v(" "),
       _vm._l(_vm.shoppingLists, function(shoppingList) {
-        return _c(
-          "div",
-          { staticClass: "row mrb-10" },
-          [
-            _c("h4", [_vm._v(_vm._s(shoppingList.listName))]),
-            _vm._v(" "),
-            _c("strong", [_vm._v("List Creator")]),
-            _vm._v(" " + _vm._s(shoppingList.creator) + "\n        "),
-            _c("strong", [_vm._v("Public")]),
-            _vm._v(" " + _vm._s(shoppingList.visible) + "\n        "),
-            _c("strong", [_vm._v("Editable")]),
-            _vm._v(" " + _vm._s(shoppingList.editable) + "\n        "),
-            shoppingList.items.length != 0
-              ? _c("div", [
-                  _c("h3", [_vm._v("Current Shopping List Items")]),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    [
-                      _vm._m(0, true),
-                      _vm._v(" "),
-                      _vm._l(shoppingList.items, function(item) {
-                        return _c("tr", [
-                          _c("td", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.done,
-                                  expression: "item.done"
-                                }
-                              ],
-                              attrs: {
-                                type: "checkbox",
-                                id: "completeCheckbox"
-                              },
-                              domProps: {
-                                checked: Array.isArray(item.done)
-                                  ? _vm._i(item.done, null) > -1
-                                  : item.done
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.checkItem(
-                                    item._id,
-                                    shoppingList._id,
-                                    item.done
-                                  )
-                                },
-                                change: function($event) {
-                                  var $$a = item.done,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          item,
-                                          "done",
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          item,
-                                          "done",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(item, "done", $$c)
-                                  }
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.quantity))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.shop))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.category))]),
-                          _vm._v(" "),
-                          shoppingList.editable == true
-                            ? _c("td", [
-                                _c(
-                                  "button",
-                                  {
-                                    on: {
-                                      click: function($event) {
-                                        _vm.deleteItem(
-                                          shoppingList._id,
-                                          item._id
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("X")]
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          shoppingList.editable == false
-                            ? _c("td", [
-                                _c(
-                                  "button",
-                                  {
-                                    attrs: { disabled: "" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.deleteItem(
-                                          shoppingList._id,
-                                          item._id
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("X")]
-                                )
-                              ])
-                            : _vm._e()
-                        ])
-                      })
-                    ],
-                    2
+        return _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("h5", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(shoppingList.listName))
+                ]),
+                _vm._v(" "),
+                _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
+                  _c("strong", [_vm._v("List Creator")]),
+                  _vm._v(
+                    " " + _vm._s(shoppingList.creator) + "\n                "
                   )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("p1", [_vm._v("Add items to new shopping list")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.listItemName,
-                  expression: "listItemName"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Items name" },
-              domProps: { value: _vm.listItemName },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.listItemName = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.listItemQuantity,
-                  expression: "listItemQuantity"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number", min: "1" },
-              domProps: { value: _vm.listItemQuantity },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.listItemQuantity = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectedShopList,
-                    expression: "selectedShopList"
-                  }
-                ],
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selectedShopList = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { disabled: "", value: "" } }, [
-                  _vm._v("Please select one")
                 ]),
                 _vm._v(" "),
-                _c("option", [_vm._v("Woolworths")]),
-                _vm._v(" "),
-                _c("option", [_vm._v("Pick 'n Pay")]),
-                _vm._v(" "),
-                _c("option", [_vm._v("Checkers")])
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Select shop")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectedCategoryList,
-                    expression: "selectedCategoryList"
-                  }
-                ],
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selectedCategoryList = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { disabled: "", value: "" } }, [
-                  _vm._v("Please select one")
+                _c("div", { staticClass: "card-text" }, [
+                  shoppingList.items.length != 0
+                    ? _c("div", [
+                        _c("h3", [_vm._v("Current Shopping List Items")]),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "table" },
+                          [
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _vm._l(shoppingList.items, function(item) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.done,
+                                        expression: "item.done"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      id: "completeCheckbox"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(item.done)
+                                        ? _vm._i(item.done, null) > -1
+                                        : item.done
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.checkItem(
+                                          item._id,
+                                          shoppingList._id,
+                                          item.done
+                                        )
+                                      },
+                                      change: function($event) {
+                                        var $$a = item.done,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = null,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              _vm.$set(
+                                                item,
+                                                "done",
+                                                $$a.concat([$$v])
+                                              )
+                                          } else {
+                                            $$i > -1 &&
+                                              _vm.$set(
+                                                item,
+                                                "done",
+                                                $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1))
+                                              )
+                                          }
+                                        } else {
+                                          _vm.$set(item, "done", $$c)
+                                        }
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.quantity))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.shop))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.category))]),
+                                _vm._v(" "),
+                                shoppingList.editable == true
+                                  ? _c("td", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-danger",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deleteItem(
+                                                shoppingList._id,
+                                                item._id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("X")]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                shoppingList.editable == false
+                                  ? _c("td", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-danger",
+                                          attrs: { disabled: "" },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deleteItem(
+                                                shoppingList._id,
+                                                item._id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("X")]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
-                _c("option", [_vm._v("Food")]),
+                _c("p1", [_vm._v("Add items to new shopping list")]),
                 _vm._v(" "),
-                _c("option", [_vm._v("Toys")]),
-                _vm._v(" "),
-                _c("option", [_vm._v("Other")])
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Select category")]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    _vm.addItemToShoppingList(shoppingList._id)
-                  }
-                }
-              },
-              [_vm._v("Add item")]
-            ),
-            _vm._v(" "),
-            !_vm.sharing
-              ? _c("div", [
-                  _c(
-                    "button",
-                    {
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.listItemName,
+                          expression: "listItemName"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Items name" },
+                      domProps: { value: _vm.listItemName },
                       on: {
-                        click: function($event) {
-                          _vm.share()
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.listItemName = $event.target.value
                         }
                       }
-                    },
-                    [_vm._v("Share")]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.sharing
-              ? _c("div", [
-                  _c("div", { staticClass: "row" }, [
-                    _c("h3", [_vm._v("select members to share with")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.email,
-                            expression: "email"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Email" },
-                        domProps: { value: _vm.email },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.email = $event.target.value
-                          }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.listItemQuantity,
+                          expression: "listItemQuantity"
                         }
-                      }),
-                      _vm._v(" "),
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", min: "1" },
+                      domProps: { value: _vm.listItemQuantity },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.listItemQuantity = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedShopList,
+                        expression: "selectedShopList"
+                      }
+                    ],
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selectedShopList = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { disabled: "", value: "" } }, [
+                      _vm._v("Please select one")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Woolworths")]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Pick 'n Pay")]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Checkers")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("span", [_vm._v("Select shop")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedCategoryList,
+                        expression: "selectedCategoryList"
+                      }
+                    ],
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selectedCategoryList = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { disabled: "", value: "" } }, [
+                      _vm._v("Please select one")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Food")]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Toys")]),
+                    _vm._v(" "),
+                    _c("option", [_vm._v("Other")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("span", [_vm._v("Select category")]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: {
+                      click: function($event) {
+                        _vm.addItemToShoppingList(shoppingList._id)
+                      }
+                    }
+                  },
+                  [_vm._v("+")]
+                ),
+                _vm._v(" "),
+                !_vm.sharing
+                  ? _c("div", [
                       _c(
                         "button",
                         {
                           on: {
                             click: function($event) {
-                              _vm.addToShareList($event)
+                              _vm.share()
                             }
                           }
                         },
-                        [_vm._v("Add Email")]
+                        [_vm._v("Share")]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _vm.sharingList != 0
-                        ? _c("div", [
-                            _c("h3", [_vm._v("Sharing List")]),
-                            _vm._v(" "),
-                            _c(
-                              "table",
-                              [
-                                _vm._m(1, true),
-                                _vm._v(" "),
-                                _vm._l(_vm.sharingList, function(email) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(email))])
-                                  ])
-                                })
-                              ],
-                              2
-                            )
-                          ])
-                        : _vm._e()
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.send(shoppingList._id)
-                        }
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.sharing
+                  ? _c("div", [
+                      _c("div", { staticClass: "row" }, [
+                        _c("h3", [_vm._v("select members to share with")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.email,
+                                expression: "email"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "Email" },
+                            domProps: { value: _vm.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.email = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-secondary",
+                              on: {
+                                click: function($event) {
+                                  _vm.addToShareList($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Add Email")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _vm.sharingList != 0
+                            ? _c("div", [
+                                _c("h3", [_vm._v("Sharing List")]),
+                                _vm._v(" "),
+                                _c(
+                                  "table",
+                                  { staticClass: "table" },
+                                  [
+                                    _vm._m(1, true),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.sharingList, function(email) {
+                                      return _c("tr", [
+                                        _c("td", [_vm._v(_vm._s(email))])
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          on: {
+                            click: function($event) {
+                              _vm.send(shoppingList._id)
+                            }
+                          }
+                        },
+                        [_vm._v("Send Invites")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteShoppingList(shoppingList._id)
                       }
-                    },
-                    [_vm._v("Send Invites")]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    _vm.deleteShoppingList(shoppingList._id)
-                  }
-                }
-              },
-              [_vm._v("Delete List")]
-            ),
-            _vm._v(" "),
-            _c("hr")
-          ],
-          1
-        )
+                    }
+                  },
+                  [_vm._v("Delete List")]
+                )
+              ],
+              1
+            )
+          ])
+        ])
       })
     ],
     2

@@ -41,11 +41,8 @@
                     googleEmail: profile.getEmail(),
                     googlePhoto: profile.getImageUrl(),
                 }
-                console.log(profile.getId())
                 axios.post('/api/addUser', param).then((response) => {
-                    console.log("user added to db");
                 }).catch((error) => {
-                    console.log(error);
                 })
                 location.reload()
                 this.$notify({
@@ -56,7 +53,6 @@
             },
             onSignInError (error) {
                 // `error` contains any error occurred.
-                console.log('Login failed', error)
             },
         }
     }

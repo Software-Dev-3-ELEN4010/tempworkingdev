@@ -19,8 +19,6 @@ shoppingListRoutes.route('/markDone').post(function (req, callres, next) {
 shoppingListRoutes.route('/copyList').post(function (req, callres, next) {
   var listId = req.body.listId
   var userId = req.body.userId
-  console.log(listId)
-  console.log(userId)
   User.update({googleId: userId}, {$push: {userShoppingLists: listId}}, function (err, model) {
     if (err) {
       console.log(err)
@@ -90,13 +88,9 @@ shoppingListRoutes.route('/shareList/:id').post(function (req, res) {
     console.log(res)
   }
   var listId = req.params.id
-  console.log('share!')
   var sharingList = req.body.sharingList
   console.log(sharingList)
   for (var i = 0; i < sharingList.length; i++) {
-    console.log('INLOOP')
-    console.log(sharingList[i])
-    console.log(listId)
     User.update({googleEmail: sharingList[i]}, {$push: {userShoppingLists: listId}}, function (err, model) {
       if (err) {
         console.log(err)
@@ -119,8 +113,6 @@ shoppingListRoutes.route('/add/:id').post(function (req, res) {
       if (error) {
         res.status(400).send('Unable to create shopping list')
       }
-      console.log(shoppingList._id)
-      console.log(req.params.id)
       var newlyAddedListId = shoppingList._id
       User.update({googleId: req.params.id}, {$push: {userShoppingLists: newlyAddedListId}}, function (err, model) {
         if (err) {
@@ -147,7 +139,6 @@ shoppingListRoutes.route('/deleteItem/:id').get(function (req, res, next) {
   var id = req.params.id
   console.log(id)
   ShoppingList.findById(id.substring(0, 24), function (error, shoppingList) {
-    console.log(shoppingList)
     if (error) {
       return next(new Error('shopping list was not found'))
     }
