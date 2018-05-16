@@ -2,7 +2,6 @@
     <div class="col-md-12">
         <h2>View all your saved lists for your profile</h2>
         <div class="row mrb-10" v-for="shoppingList in shoppingLists">
-            <div v-show="shoppingList.visible==true">
                 <h4>{{shoppingList.listName}}</h4>
                 <strong>List Creator</strong> {{shoppingList.creator}}
                 <strong>Public</strong> {{shoppingList.visible}}
@@ -24,7 +23,9 @@
                             <td>{{item.quantity}}</td>
                             <td>{{item.shop}}</td>
                             <td>{{item.category}}</td>
-                            <td><button v-on:click="deleteItem(shoppingList._id, item._id)">X</button>
+                            <td v-if="shoppingList.editable==true"><button v-on:click="deleteItem(shoppingList._id, item._id)">X</button>
+                            </td>
+                            <td v-if="shoppingList.editable==false"><button v-on:click="deleteItem(shoppingList._id, item._id)" disabled>X</button>
                             </td>
                         </tr>
                     </table>
@@ -54,8 +55,6 @@
                 <button v-on:click="addItemToShoppingList(shoppingList._id)">Add item</button>
                 <button v-on:click="deleteShoppingList(shoppingList._id)">Delete List</button>
                 <hr>
-
-            </div>
         </div>
     </div>
 </template>

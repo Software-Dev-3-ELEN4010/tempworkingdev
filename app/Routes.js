@@ -64,6 +64,25 @@ shoppingListRoutes.route('/all').get(function (req, res, next) {
     res.json(shoppingList) // return all items in shopping list
   })
 })
+
+shoppingListRoutes.route('/shareList/:id').post(function (req, res) {
+  var listId = req.params.id
+  console.log('share!')
+
+  var sharingList = req.body.sharingList
+  console.log(sharingList)
+  for (var i = 0; i < sharingList.length; i++) {
+    console.log('INLOOP')
+    console.log(sharingList[i])
+    console.log(listId)
+    User.update({googleEmail: sharingList[i]}, {$push: {userShoppingLists: listId}}, function (err, model) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  }
+})
+
 // create a shoppingList and add to database
 shoppingListRoutes.route('/add/:id').post(function (req, res) {
   ShoppingList.create(

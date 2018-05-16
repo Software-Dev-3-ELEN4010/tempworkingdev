@@ -43,60 +43,107 @@
                             <th>Shop</th>
                             <th>Category</th>
                         </tr>
-                            <tr v-for="item in items">
-                                <td>T</td>
-                                <td>{{item.name}}</td>
-                                <td>{{item.quantity}}</td>
-                                <td>{{item.shop}}</td>
-                                <td>{{item.category}}</td>
-                            </tr>
+                        <tr v-for="item in items">
+                            <td>T</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.shop}}</td>
+                            <td>{{item.category}}</td>
+                        </tr>
                     </table>
                 </div>
 
+                <button v-on:click="share()">Share</button>
+                <div v-if="sharing">
+                    <div class="row">
+                        <h3>select members to share with</h3>
+                        <div class="input-group">
+
+                            <input type="text" class="form-control" placeholder="Email" v-model="email">
+                            <button v-on:click="addToShareList($event)">Add Email</button>
+                        </div>
+                        <div class="row">
+                            <div v-if="sharingList!=0">
+                                <h3>Sharing List</h3>
+                                <table>
+                                    <tr>
+                                        <th>Email</th>
+                                    </tr>
+                                    <tr v-for="email in sharingList">
+                                        <td>{{email}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
                 <button v-on:click="saveShoppingList($event)">Save</button>
+
             </div>
         </form>
     </div>
 </template>
-<script>
-  import axios from 'axios';
 
-  export default {
-    data() {
-      return {
-        items: [],
-          sharing: [],
-        typing: false,
-        shoppingListName: '',
-        editableCheckbox: false,
-        visibleCheckbox: false
-      }
-    },
-    methods: {
-      saveShoppingList(event) {
-        if (this.shoppingListName != '') {
-          if (event) event.preventDefault();
-          let param = {
-            listName: this.shoppingListName,
-            editable: this.editableCheckbox,
-            visible: this.visibleCheckbox,
-            items: this.items,
-            creator: this.$session.get('profileId'),
-            quantity: 0
-          };
-          axios.post('/api/add/'+this.$session.get('profileId'), param).then((response) => {
-            console.log("added to db");
-            this.typing = false;
-          }).catch((error) => {
-            console.log(error);
-          })
+<modal name="hello-world">
+    hello, world!
+</modal>
+
+<script>
+    import axios from 'axios';
+
+    export default {
+        data() {
+            return {
+                items: [],
+                sharing: false,
+                sharingList: [],
+                typing: false,
+                shoppingListName: '',
+                editableCheckbox: false,
+                visibleCheckbox: false
+            }
+        },
+        methods: {
+            share(){
+                this.sharing = true
+            },
+
+            saveShoppingList(event) {
+                if (this.shoppingListName != '') {
+                    if (event) event.preventDefault();
+                    let param = {
+                        listName: this.shoppingListName,
+                        editable: this.editableCheckbox,
+                        visible: this.visibleCheckbox,
+                        items: this.items,
+                        creator: this.$session.get('profileId'),
+                        quantity: 0
+                    };
+                    axios.post('/api/add/' + this.$session.get('profileId'), param).then((response) => {
+                        axios.post('/api/shareList/' + response.data._id, {sharingList: this.sharingList}).then((response2) => {
+                            this.typing = false;
+                        }).catch((error) => {
+                            console.log(error);
+                        })
+                        this.typing = false;
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                }
+            },
+            addItemToList(event) {
+                this.items.push({name: this.name, quantity: this.quantity, shop: this.shop, category: this.category})
+            },
+            addToShareList(event) {
+                if (this.email != '') {
+                    this.sharingList.push(this.email)
+                    this.email = ''
+                }
+            }
         }
-      },
-      addItemToList(event) {
-        this.items.push({name: this.name, quantity: this.quantity, shop: this.shop, category: this.category})
-      }
     }
-  }
 </script>
 
 <style>
